@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
   inputConfirmPassword: {
     width: "90%",
     borderRadius: 10,
+    marginTop: '2%',
   },
 
   inputEmail: {
@@ -145,11 +146,32 @@ const styles = StyleSheet.create({
     color: "#8F9BB3",
   },
 
-  hairline: {
-    backgroundColor: '#A2A2A2',
-    height: 1,
-    width: '70%',
-    marginRight: '7%',
+  btnAgain: {
+    backgroundColor: '#8288C3',
+    height: 45,
+    width: '80%',
+    borderRadius: 10,
+    marginTop: '10%',
+    marginLeft: '10%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  regist: {
+    backgroundColor: '#283739',
+    width: '85%',
+    marginTop: 50,
+    borderRadius: 50,
+    borderColor: '#000',
+  },
+  backdrop: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  warnicon: {
+    height: 35,
+    width: 35,
+    marginRight: 10,
+    marginBottom: 20,
   },
 
 });
