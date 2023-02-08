@@ -2,60 +2,34 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
 
-  //landing
-  card_init: {
+  
+  // LogIn Page
+
+  captionContainer: {
+    display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    height: '35%',
-    width: '50%',
-    minWidth: 273,
-    borderRadius: 34,
-    padding: '8%',
-    marginLeft: '15%',
-    marginTop: '-30%',
   },
 
-  text_init: {
-    fontSize: '25%',
-    fontWeight: '500',
-    textAlign: 'left',
-    marginLeft: '-25%',
-    marginBottom: '10%',
-  },
-
-  btn_init: {
-    backgroundColor: '#8288C3',
-    height: '16%',
-    width: '100%',
-    minWidth: 200,
-    borderRadius: 10,
-    marginBottom: '5%',
-  },
-
-  shadowProp: {
-    shadowColor: '#171717',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
+  captionIcon: {
+    width: 10,
+    height: 10,
+    marginRight: 5
   },
 
 
-  //login
-
-  inputPassword: {
-    marginTop: '2%',
-    marginBottom: '20%',
-    width: "90%",
-    borderRadius: 10,
-  },
+  // LogIn and SignIn Page
 
   inputEmail: {
     width: "90%",
     borderRadius: 10,
   },
 
-  inputContainer: {
-    alignItems: 'center',
+  inputPassword: {
+    marginTop: '2%',
+    marginBottom: '20%',//
+    width: "90%",
+    borderRadius: 10,
   },
 
   btnLogin: {
@@ -67,88 +41,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  captionContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+  backdrop: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 
-  captionIcon: {
-    width: 10,
-    height: 10,
-    marginRight: 5
-  },
-
-  captionText: {
-    fontSize: 12,
-    fontWeight: "400",
-    color: "#8F9BB3",
-  },
-
-
-  //signin
-
-  inputPassword: {
-    marginTop: '2%',
-    width: "90%",
-    borderRadius: 10,
-  },
-
-  inputConfirmPassword: {
-    width: "90%",
-    borderRadius: 10,
-    marginTop: '2%',
-  },
-
-  inputEmail: {
-    width: "90%",
-    borderRadius: 10,
-  },
-
-  inputContainer: {
-    alignItems: 'center',
-  },
-
-  btnSignin: {
-    backgroundColor: '#8288C3',
-    height: 45,
-    width: '60%',
-    borderRadius: 10,
-    marginTop: '10%',
-    marginBottom: '1%',
-    justifyContent: 'center',
-  },
-
-  btnLogin_: {
-    backgroundColor: '#8288C3',
-    height: 45,
-    width: '60%',
-    borderRadius: 10,
-    marginTop: '1%',
-    justifyContent: 'center',
-  },
-
-  captionContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  captionIcon: {
-    width: 10,
-    height: 10,
-    marginRight: 5
-  },
-
-  captionText: {
-    fontSize: 12,
-    fontWeight: "400",
-    color: "#8F9BB3",
-  },
-
-  errorMessage: {
-    fontSize: 10,
-    color: "red",
+  warnicon: {
+    height: 35,
+    width: 35,
+    marginRight: 10,
+    marginBottom: 20,
   },
 
   btnAgain: {
@@ -162,23 +63,13 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 
-  regist: {
-    backgroundColor: '#283739',
-    width: '85%',
-    marginTop: 50,
-    borderRadius: 50,
-    borderColor: '#000',
-  },
 
-  backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
+  // SignIn Page
 
-  warnicon: {
-    height: 35,
-    width: 35,
-    marginRight: 10,
-    marginBottom: 20,
+  inputConfirmPassword: {
+    width: "90%",
+    borderRadius: 10,
+    marginTop: '2%',
   },
 
   inputName: {
@@ -194,7 +85,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
+  inputPassword: {
+    marginTop: '2%',
+    width: "90%",
+    borderRadius: 10,
+  },
 
+  errorMessage: {
+    fontSize: 10,
+    color: "red",
+  },
 });
 
 export default styles;

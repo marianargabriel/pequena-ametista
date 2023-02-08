@@ -1,8 +1,7 @@
 import { Image, Dimensions, TouchableWithoutFeedback, View, Button, KeyboardAvoidingView, Platform, Keyboard } from 'react-native'
-import React, { useEffect, useId, useState } from 'react'
-import { Avatar, Layout, Text, Input, Icon, Card, Modal } from '@ui-kitten/components';
+import React, { useEffect, useState } from 'react'
+import { Layout, Text, Input, Icon, Card, Modal } from '@ui-kitten/components';
 
-import { db, auth } from '../firebaseConnection'
 import { doc, setDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
@@ -65,12 +64,12 @@ const SignIn = ({ navigation, route }) => {
 
     const auth = getAuth();
 
-    function newData(){
-        db.collection("Users").add({
-            Nome: Name,
-            Telemovel: Phone,
-        })
-    }
+    // function newData(){
+    //     firestore().collection("Users").add({
+    //         Nome: Name,
+    //         Telemovel, Phone,
+    //     })
+    // }
 
     return (
         <KeyboardAvoidingView
@@ -287,7 +286,7 @@ const SignIn = ({ navigation, route }) => {
                                         setErrorMessage("Obrigatório*")
                                     } else {
                                         if (Name != '' && Phone != '') {
-                                            newData();
+                                            // newData();
                                             setVisibleNewData(false);
                                             navigation.navigate('Home');
                                         }

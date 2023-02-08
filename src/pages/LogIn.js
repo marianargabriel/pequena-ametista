@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableWithoutFeedback, KeyboardAvoidingView, View, Image, Dimensions, Keyboard, Button, Vibration } from 'react-native';
+import { TouchableWithoutFeedback, KeyboardAvoidingView, View, Image, Dimensions, Keyboard, Button } from 'react-native';
 import { Icon, Input, Text, Layout, Modal, Card } from '@ui-kitten/components';
 
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth"
@@ -23,12 +23,7 @@ const LogIn = ({ navigation, route }) => {
     setSecureTextEntry(!secureTextEntry);
   };
 
-
   const [visibleErr, setVisibleErr] = React.useState(false);
-
-
-
-  const [visibleNull, setVisibleNull] = React.useState(false);
 
   const renderIcon = (props) => (
     <TouchableWithoutFeedback onPress={toggleSecureEntry}>

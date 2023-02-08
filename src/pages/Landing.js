@@ -1,7 +1,5 @@
-import { Text, View, Image, Button, Dimensions } from 'react-native';
+import { Text, View, Image, Button, Dimensions, StyleSheet } from 'react-native';
 import React from 'react';
-
-import styles from "../styles";
 
 import { Layout } from '@ui-kitten/components';
 
@@ -26,3 +24,43 @@ export default function Landing({ navigation }) {
     </Layout>
   );
 };
+
+
+const styles = StyleSheet.create({
+
+  card_init: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    height: '35%',
+    width: '50%',
+    minWidth: 273,
+    borderRadius: 34,
+    padding: '8%',
+    marginLeft: '15%',
+    marginTop: '-30%',
+  },
+
+  shadowProp: {
+    shadowColor: '#171717',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+
+  text_init: {
+    fontSize: '25%',
+    fontWeight: '500',
+    textAlign: 'left',
+    marginLeft: '-25%',
+    marginBottom: '10%',
+  },
+
+  btn_init: {
+    backgroundColor: '#8288C3',
+    height: '16%',
+    width: '100%',
+    minWidth: 200,
+    borderRadius: 10,
+    marginBottom: '5%',
+  },
+})
