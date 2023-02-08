@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableWithoutFeedback, KeyboardAvoidingView, View, Image, Dimensions, Keyboard, Button } from 'react-native';
+import { TouchableWithoutFeedback, KeyboardAvoidingView, View, Image, Dimensions, Keyboard, Button, Vibration } from 'react-native';
 import { Icon, Input, Text, Layout, Modal, Card } from '@ui-kitten/components';
 
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth"
@@ -23,8 +23,12 @@ const LogIn = ({ navigation, route }) => {
     setSecureTextEntry(!secureTextEntry);
   };
 
-  const [visible, setVisible] = React.useState(false);
 
+  const [visibleErr, setVisibleErr] = React.useState(false);
+
+
+
+  const [visibleNull, setVisibleNull] = React.useState(false);
 
   const renderIcon = (props) => (
     <TouchableWithoutFeedback onPress={toggleSecureEntry}>
@@ -69,7 +73,7 @@ const LogIn = ({ navigation, route }) => {
         style={{ flex: 1 }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Image style={{ width: width * 0.9, height: width * 0.5 * 1.5, marginTop: isKeyboardVisible == true ? '-2%' : '-25%', marginBottom: '8%' }} source={require('../../img/LOGO-C.png')}></Image>
+            <Image style={{ width: width * 0.9, height: width * 0.5 * 1.5, marginTop: isKeyboardVisible == true ? '-2%' : '-25%', marginBottom: '8%' }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/LOGO%20C.png?alt=media&token=5c5f71c7-7006-45aa-af68-005267eda5e0' }}></Image>
             <Input style={styles.inputEmail}
               placeholder='Email'
               keyboardType="email-address"
@@ -96,7 +100,7 @@ const LogIn = ({ navigation, route }) => {
                       if (user) {
                         const uid = user.uid;
 
-                        navigation.navigate('Shedule', {
+                        navigation.navigate('Home', {
                           UID: uid
                         })
                       } else {
@@ -106,11 +110,9 @@ const LogIn = ({ navigation, route }) => {
                   })
 
                   .catch((error) => {
-                    setVisible(true)
+                    setVisibleErr(true)
 
                     const errorCode = error.code;
-                    const errorMessage = error.message;
-
                     console.log(errorCode)
                   });
               }} />
@@ -120,9 +122,9 @@ const LogIn = ({ navigation, route }) => {
             </View>
 
             <Modal
-              visible={visible}
+              visible={visibleErr}
               backdropStyle={styles.backdrop}
-              onBackdropPress={() => setVisible(false)}>
+              onBackdropPress={() => setVisibleErr(false)}>
               <Card disabled={true} style={{ borderRadius: 15, }}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                   <Icon
@@ -134,7 +136,7 @@ const LogIn = ({ navigation, route }) => {
                 </View>
                 <Text> Palavra-passe ou endereço de email incorretos.</Text>
                 <View style={styles.btnAgain}>
-                <Button title='Tentar Novamente' color='#fff' onPress={() => setVisible(false)} />
+                  <Button title='Tentar Novamente' color='#fff' onPress={() => setVisibleErr(false)} />
                 </View>
               </Card>
             </Modal>

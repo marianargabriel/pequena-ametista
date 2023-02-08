@@ -1,29 +1,39 @@
 import { Image, Dimensions, TouchableWithoutFeedback, View, Button, KeyboardAvoidingView, Platform, Keyboard } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useId, useState } from 'react'
 import { Avatar, Layout, Text, Input, Icon, Card, Modal } from '@ui-kitten/components';
 
-import '../firebaseConnection'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { db, auth } from '../firebaseConnection'
+import { doc, setDoc } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
 import styles from "../styles";
 
 const { width } = Dimensions.get('window');
 
-const SignInprov = ({ navigation, route }) => {
+const SignIn = ({ navigation, route }) => {
     const params = route.params
     const [Email, setEmail] = React.useState('');
     const [Password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
+    const [Name, setName] = React.useState('');
+    const [Phone, setPhone] = React.useState('');
+    const [] = useState(null)
+
     const [secureTextEntry, setSecureTextEntry] = React.useState(true);
     const toggleSecureEntry = () => {
         setSecureTextEntry(!secureTextEntry);
     };
 
+    const [errorMessage, setErrorMessage] = useState(null);
+
+    const [visiblePassCurta, setVisiblePassCurta] = React.useState(false);
     const [visiblePassDif, setVisiblePassDif] = React.useState(false);
     const [visibleNull, setVisibleNull] = React.useState(false);
     const [visibleEmail, setVisibleEmail] = React.useState(false);
     const [visibleEmailUsed, setVisibleEmailUsed] = React.useState(false);
-    const [visibleRegistSuss, setVisibleRegistSuss] = React.useState(false);
+    const [visibleNewData, setVisibleNewData] = React.useState(false);
+
+    let uid;
 
     const renderIcon = (props) => (
         <TouchableWithoutFeedback onPress={toggleSecureEntry}>
@@ -55,13 +65,20 @@ const SignInprov = ({ navigation, route }) => {
 
     const auth = getAuth();
 
+    function newData(){
+        db.collection("Users").add({
+            Nome: Name,
+            Telemovel: Phone,
+        })
+    }
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{ flex: 1 }}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Image style={{ width: width * 0.9, height: width * 0.5 * 1.5, marginTop: isKeyboardVisible == true ? '-2%' : '-25%', marginBottom: '8%' }} source={require('../../img/LOGO-C.png')}></Image>
+                    <Image style={{ width: width * 0.9, height: width * 0.5 * 1.5, marginTop: isKeyboardVisible == true ? '-2%' : '-25%', marginBottom: '8%' }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/LOGO%20C.png?alt=media&token=5c5f71c7-7006-45aa-af68-005267eda5e0' }}></Image>
 
                     <Input
                         placeholder='Endereço de Email'
@@ -92,30 +109,39 @@ const SignInprov = ({ navigation, route }) => {
 
                     <View style={styles.btnLogin}>
                         <Button title='Continuar' color='#fff' onPress={() => {
-                            if (Password != '' || confirmPassword != '' || Password != null || confirmPassword != null ) {
-                                createUserWithEmailAndPassword(auth, Email, Password)
-                                    .then((userCredential) => {
-                                        // Signed in
-                                        const user = userCredential.user;
-                                        setVisibleRegistSuss(true)
-                                    })
-                                    .catch((error) => {
-                                        const errorCode = error.code;
+                            if (Password != '' || confirmPassword != '') {
+                                if (Password === confirmPassword) {
+                                    createUserWithEmailAndPassword(auth, Email, Password)
+                                        .then((userCredential) => {
+                                            onAuthStateChanged(auth, (user) => {
+                                                if (user) {
+                                                    uid = user.uid;
+                                                } else {
+                                                    console.log('Não conseguimos ir buscar nunhum UID da conta')
+                                                }
+                                            });
+                                            setVisibleNewData(true)
+                                        })
+                                        .catch((error) => {
+                                            const errorCode = error.code;
 
-                                        console.log(errorCode)
-                                        if (errorCode == 'auth/invalid-email' || errorCode == 'auth/missing-email') {
-                                            setVisibleEmail(true)
-                                        }
-                                        if(Password === '' || confirmPassword === '' || Password === null || confirmPassword === null){
-                                            setVisibleNull(true)
-                                        }
-                                        if (errorCode == 'auth/weak-password') {
-                                            setVisiblePassDif(true)
-                                        }
-                                        if (errorCode == 'auth/email-already-in-use') {
-                                            setVisibleEmailUsed(true)
-                                        }
-                                    });
+                                            console.log(errorCode)
+                                            if (errorCode == 'auth/invalid-email' || errorCode == 'auth/missing-email') {
+                                                setVisibleEmail(true)
+                                            }
+                                            if (!Password || !confirmPassword) {
+                                                setVisibleNull(true)
+                                            }
+                                            if (errorCode == 'auth/weak-password') {
+                                                setVisiblePassCurta(true)
+                                            }
+                                            if (errorCode == 'auth/email-already-in-use') {
+                                                setVisibleEmailUsed(true)
+                                            }
+                                        });
+                                } else {
+                                    setVisiblePassDif(true)
+                                }
                             }
                             else {
                                 setVisibleNull(true)
@@ -124,6 +150,11 @@ const SignInprov = ({ navigation, route }) => {
                         } />
                     </View>
 
+                    <View style={{ flexDirection: 'row', marginTop: '5%' }}>
+                        <Text>Já tem conta?</Text><Text style={{ color: '#8288C3' }} onPress={() => navigation.navigate('LogIn')}> Iniciar Sessão</Text>
+                    </View>
+
+                    {/* Email já em uso */}
                     <Modal
                         visible={visibleEmailUsed}
                         backdropStyle={styles.backdrop}
@@ -143,17 +174,8 @@ const SignInprov = ({ navigation, route }) => {
                             </View>
                         </Card>
                     </Modal>
-                    <Modal
-                        visible={visibleRegistSuss}
-                        backdropStyle={styles.backdrop}
-                        onBackdropPress={() => setVisibleRegistSuss(false)}>
-                        <Card disabled={true} style={{ borderRadius: 15, }}>
-                            <Text style={{ fontWeight: 'bold' }}>Registado com sucesso.</Text>
-                            <View style={styles.btnAgain} >
-                                <Button title='Continuar' color='#fff' onPress={() => setVisibleRegistSuss(false)} />
-                            </View>
-                        </Card>
-                    </Modal>
+
+                    {/* Endereço de email inválido */}
                     <Modal
                         visible={visibleEmail}
                         backdropStyle={styles.backdrop}
@@ -173,6 +195,8 @@ const SignInprov = ({ navigation, route }) => {
                             </View>
                         </Card>
                     </Modal>
+
+                    {/* Sem password */}
                     <Modal
                         visible={visibleNull}
                         backdropStyle={styles.backdrop}
@@ -192,6 +216,29 @@ const SignInprov = ({ navigation, route }) => {
                             </View>
                         </Card>
                     </Modal>
+
+                    {/* Password curta */}
+                    <Modal
+                        visible={visiblePassCurta}
+                        backdropStyle={styles.backdrop}
+                        onBackdropPress={() => setVisiblePassDif(false)}>
+                        <Card disabled={true} style={{ borderRadius: 15 }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                                <Icon
+                                    style={styles.warnicon}
+                                    fill='red'
+                                    name='alert-triangle-outline'
+                                />
+                                <Text style={{ marginBottom: 20, fontWeight: 'bold', }}>Erro</Text>
+                            </View>
+                            <Text>A palavra-passe é muito fraca. Crie uma palavra-passe com no mínimo 6 caracteres.</Text>
+                            <View style={styles.btnAgain} >
+                                <Button title='Tentar Novamente' color='#fff' onPress={() => setVisiblePassCurta(false)} />
+                            </View>
+                        </Card>
+                    </Modal>
+
+                    {/* Passwords diferentes */}
                     <Modal
                         visible={visiblePassDif}
                         backdropStyle={styles.backdrop}
@@ -212,10 +259,48 @@ const SignInprov = ({ navigation, route }) => {
                         </Card>
                     </Modal>
 
+                    {/* Últimos dados */}
+                    <Modal
+                        visible={visibleNewData}
+                        backdropStyle={styles.backdrop}>
+                        <Card disabled={true} style={{ borderRadius: 15, }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                                <Text style={{ marginBottom: 20 }}>Antes de continuar, insira os últimos dados necessários:</Text>
+                            </View>
+                            <Text style={styles.errorMessage}>{errorMessage}</Text>
+                            <Input style={styles.inputName}
+                                placeholder='Nome'
+                                keyboardType="name"
+                                value={Name}
+                                onChangeText={nextValue => setName(nextValue)}
+                            />
+                            <Text style={styles.errorMessage}>{errorMessage}</Text>
+                            <Input style={styles.inputPhone}
+                                placeholder='Número de Telemóvel'
+                                keyboardType='numeric'
+                                value={Phone}
+                                onChangeText={nextValue => setPhone(nextValue)}
+                            />
+                            <View style={styles.btnAgain} >
+                                <Button title='OK' color='#fff' onPress={async () => {
+                                    if (Name == '' || Phone == '') {
+                                        setErrorMessage("Obrigatório*")
+                                    } else {
+                                        if (Name != '' && Phone != '') {
+                                            newData();
+                                            setVisibleNewData(false);
+                                            navigation.navigate('Home');
+                                        }
+                                    }
+                                }} />
+                            </View>
+                        </Card>
+                    </Modal>
+
                 </Layout >
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     )
 }
 
-export default SignInprov
+export default SignIn

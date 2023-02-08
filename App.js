@@ -13,6 +13,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Landing from './src/pages/Landing';
 import LogIn from './src/pages/LogIn';
 import SignIn from './src/pages/SignIn';
+import Home from './src/pages/Home';
 import Schedule from './src/pages/Schedule';
 
 const Stack = createNativeStackNavigator();
@@ -33,6 +34,7 @@ export default function App() {
             <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
             <Stack.Screen name="LogIn" component={LogIn} options={{ headerShown: false }} />
             <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="Schedule" component={Schedule} options={{ title: 'Agendar', headerBackTitle: 'Voltar' }} />
           </Stack.Navigator>
         </NavigationContainer>

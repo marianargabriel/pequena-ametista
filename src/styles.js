@@ -146,6 +146,11 @@ const styles = StyleSheet.create({
     color: "#8F9BB3",
   },
 
+  errorMessage: {
+    fontSize: 10,
+    color: "red",
+  },
+
   btnAgain: {
     backgroundColor: '#8288C3',
     height: 45,
@@ -164,15 +169,31 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderColor: '#000',
   },
+
   backdrop: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
+
   warnicon: {
     height: 35,
     width: 35,
     marginRight: 10,
     marginBottom: 20,
   },
+
+  inputName: {
+    marginTop: '2%',
+    marginBottom: '3%',
+    width: "100%",
+    borderRadius: 10,
+  },
+
+  inputPhone: {
+    marginTop: '2%',
+    width: "100%",
+    borderRadius: 10,
+  },
+
 
 });
 
