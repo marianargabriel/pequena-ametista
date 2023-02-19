@@ -4,6 +4,7 @@ import { Layout, Text, Input, Icon, Card, Modal } from '@ui-kitten/components';
 
 import { doc, setDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { auth, db } from '../firebaseConnection'
 
 import styles from "../styles";
 
@@ -31,8 +32,9 @@ const SignIn = ({ navigation, route }) => {
     const [visibleEmail, setVisibleEmail] = React.useState(false);
     const [visibleEmailUsed, setVisibleEmailUsed] = React.useState(false);
     const [visibleNewData, setVisibleNewData] = React.useState(false);
+    const [uid, setUid] = React.useState("");
 
-    let uid;
+    let loadUser = false;
 
     const renderIcon = (props) => (
         <TouchableWithoutFeedback onPress={toggleSecureEntry}>
@@ -62,14 +64,16 @@ const SignIn = ({ navigation, route }) => {
 
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
-    const auth = getAuth();
 
-    // function newData(){
-    //     firestore().collection("Users").add({
-    //         Nome: Name,
-    //         Telemovel, Phone,
-    //     })
-    // }
+
+
+    async function novoUser() {
+        console.log(uid);
+        await setDoc(doc(db, "users", uid), {
+            nome: Name,
+            numero: parseInt(Phone),
+        });
+    }
 
     return (
         <KeyboardAvoidingView
@@ -112,14 +116,12 @@ const SignIn = ({ navigation, route }) => {
                                 if (Password === confirmPassword) {
                                     createUserWithEmailAndPassword(auth, Email, Password)
                                         .then((userCredential) => {
-                                            onAuthStateChanged(auth, (user) => {
-                                                if (user) {
-                                                    uid = user.uid;
-                                                } else {
-                                                    console.log('Não conseguimos ir buscar nunhum UID da conta')
-                                                }
-                                            });
-                                            setVisibleNewData(true)
+                                            setUid(userCredential.user.uid);
+                                            loadUser = true;
+
+                                            if (loadUser) {
+                                                setVisibleNewData(true);
+                                            }
                                         })
                                         .catch((error) => {
                                             const errorCode = error.code;
@@ -286,7 +288,7 @@ const SignIn = ({ navigation, route }) => {
                                         setErrorMessage("Obrigatório*")
                                     } else {
                                         if (Name != '' && Phone != '') {
-                                            // newData();
+                                            novoUser();
                                             setVisibleNewData(false);
                                             navigation.navigate('Home');
                                         }
