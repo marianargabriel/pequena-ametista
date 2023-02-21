@@ -16,6 +16,10 @@ import SignIn from './src/pages/SignIn';
 import HomeScreen from './src/pages/Home';
 import AboutUs from './src/pages/AboutUs';
 import Schedule from './src/pages/Schedule';
+import Scheduling from './src/pages/Scheduling';
+import Services from './src/pages/Services';
+import CostumersList from './src/pages/CostumersList';
+import Profile from './src/pages/Profile';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +36,10 @@ export default function App() {
             <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
             <Stack.Screen name="AboutUs" component={AboutUs} options={{ title: 'Sobre Nós', headerBackTitle: 'Voltar' }} />
             <Stack.Screen name="Schedule" component={Schedule} options={{ title: 'Agendar', headerBackTitle: 'Voltar' }} />
+            <Stack.Screen name="Scheduling" component={Scheduling} options={{ title: 'Agendamentos', headerBackTitle: 'Voltar' }} />
+            <Stack.Screen name="Services" component={Services} options={{ title: 'Serviços', headerBackTitle: 'Voltar' }} />
+            <Stack.Screen name="CostumersList" component={CostumersList} options={{ title: 'Clientes', headerBackTitle: 'Voltar' }} />
+            <Stack.Screen name="Profile" component={Profile} options={{ title: 'Perfil', headerBackTitle: 'Voltar' }} />
           </Stack.Navigator>
         </NavigationContainer>
       </ApplicationProvider>
