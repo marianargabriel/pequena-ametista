@@ -13,17 +13,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Landing from './src/pages/Landing';
 import LogIn from './src/pages/LogIn';
 import SignIn from './src/pages/SignIn';
+<<<<<<< Updated upstream
 import Home from './src/pages/Home';
+=======
+import HomeScreen from './src/pages/Home';
+>>>>>>> Stashed changes
 import AboutUs from './src/pages/AboutUs';
 import Schedule from './src/pages/Schedule';
 
 const Stack = createNativeStackNavigator();
-
-const AppScreen = () => (
-  <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text category='h1'>HOME</Text>
-  </Layout>
-);
 
 export default function App() {
   return (
@@ -35,8 +33,13 @@ export default function App() {
             <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
             <Stack.Screen name="LogIn" component={LogIn} options={{ headerShown: false }} />
             <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+<<<<<<< Updated upstream
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="AboutUs" component={AboutUs} options={{ headerShown: false }} />
+=======
+            <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="AboutUs" component={AboutUs} options={{ title: 'Sobre Nós', headerBackTitle: 'Voltar' }} />
+>>>>>>> Stashed changes
             <Stack.Screen name="Schedule" component={Schedule} options={{ title: 'Agendar', headerBackTitle: 'Voltar' }} />
           </Stack.Navigator>
         </NavigationContainer>

@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { TouchableWithoutFeedback, KeyboardAvoidingView, View, Image, Dimensions, Keyboard, Button } from 'react-native';
+
+// ui kitten
 import { Icon, Input, Text, Layout, Modal, Card } from '@ui-kitten/components';
 
+// database
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth"
 import '../firebaseConnection';
 
+<<<<<<< Updated upstream
 import styles from '../styles';
+=======
+// styles
+import styles from "../styles";
+>>>>>>> Stashed changes
 
 const { width } = Dimensions.get('window');
 

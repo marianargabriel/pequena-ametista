@@ -2,6 +2,10 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
   // LogIn Page
 
   captionContainer: {
@@ -94,6 +98,11 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: "red",
   },
+
+
+
+
+
 });
 
 export default styles;

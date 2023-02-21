@@ -1,6 +1,7 @@
 import { Text, View, Image, Button, Dimensions, StyleSheet } from 'react-native';
 import React from 'react';
 
+// ui kitten
 import { Layout } from '@ui-kitten/components';
 
 const { width } = Dimensions.get('window');
@@ -24,7 +25,6 @@ export default function Landing({ navigation }) {
     </Layout>
   );
 };
-
 
 const styles = StyleSheet.create({
 
