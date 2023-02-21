@@ -8,12 +8,8 @@ import { Icon, Input, Text, Layout, Modal, Card } from '@ui-kitten/components';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth"
 import '../firebaseConnection';
 
-<<<<<<< Updated upstream
-import styles from '../styles';
-=======
 // styles
 import styles from "../styles";
->>>>>>> Stashed changes
 
 const { width } = Dimensions.get('window');
 

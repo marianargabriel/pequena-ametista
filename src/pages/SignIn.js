@@ -9,12 +9,8 @@ import { doc, setDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from '../firebaseConnection';
 
-<<<<<<< Updated upstream
-import styles from '../styles';
-=======
 // styles
 import styles from "../styles";
->>>>>>> Stashed changes
 
 const { width } = Dimensions.get('window');
 

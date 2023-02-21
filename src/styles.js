@@ -2,10 +2,6 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
   // LogIn Page
 
   captionContainer: {
