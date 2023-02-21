@@ -4,9 +4,9 @@ import { Layout, Text, Input, Icon, Card, Modal } from '@ui-kitten/components';
 
 import { doc, setDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { auth, db } from '../firebaseConnection'
+import { auth, db } from '../firebaseConnection';
 
-import styles from "../styles";
+import styles from '../styles';
 
 const { width } = Dimensions.get('window');
 
@@ -67,7 +67,7 @@ const SignIn = ({ navigation, route }) => {
 
 
 
-    async function novoUser() {
+    async function newUser() {
         console.log(uid);
         await setDoc(doc(db, "users", uid), {
             nome: Name,
@@ -288,7 +288,7 @@ const SignIn = ({ navigation, route }) => {
                                         setErrorMessage("Obrigatório*")
                                     } else {
                                         if (Name != '' && Phone != '') {
-                                            novoUser();
+                                            newUser();
                                             setVisibleNewData(false);
                                             navigation.navigate('Home');
                                         }
@@ -304,4 +304,4 @@ const SignIn = ({ navigation, route }) => {
     )
 }
 
-export default SignIn
+export default SignIn;

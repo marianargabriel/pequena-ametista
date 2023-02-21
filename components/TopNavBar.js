@@ -20,9 +20,4 @@ const styles = StyleSheet.create({
         marginTop: StatusBar.currentHeight,
         backgroundColor: '#fff',
     },
-    logo: {
-        marginStart: 16,
-        borderWidth: 2,
-        borderColor: '#046f83',
-    },
 })

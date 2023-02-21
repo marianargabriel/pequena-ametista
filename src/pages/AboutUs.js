@@ -3,9 +3,9 @@ import React from 'react';
 
 import styles from "../styles";
 
-export default function Schedule({ navigation }) {
+export default function AboutUs({ navigation }) {
 
     return (
-        <Text>Hello, this is schedules page!</Text>
+        <Text>Hello, this is about us page!</Text>
     );
 }

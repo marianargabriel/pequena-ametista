@@ -3,9 +3,9 @@ import { TouchableWithoutFeedback, KeyboardAvoidingView, View, Image, Dimensions
 import { Icon, Input, Text, Layout, Modal, Card } from '@ui-kitten/components';
 
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth"
-import '../firebaseConnection'
+import '../firebaseConnection';
 
-import styles from "../styles";
+import styles from '../styles';
 
 const { width } = Dimensions.get('window');
 
