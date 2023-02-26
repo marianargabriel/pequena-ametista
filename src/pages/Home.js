@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Image, Dimensions, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { Profiler, useState } from 'react';
+import { View, Image, Dimensions, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // ui kitten
@@ -18,6 +18,7 @@ import LogIn from './LogIn';
 import Landing from './Landing';
 import Schedule from './Schedule';
 import AboutUs from './AboutUs';
+import Profile from './Profile';
 
 const { width } = Dimensions.get('window');
 
@@ -38,18 +39,18 @@ const HomeScreen = ({ navigation, route }) => {
                     header: () => <TopNavBar titulo="Sobre Nós" />
                 }} />
             <Tab.Screen name="Agendar" component={Schedule}
+                initialParams={{ UID: route.params.UID }}
                 options={{
                     header: () => <TopNavBar titulo="Agendar" />
                 }} />
             <Tab.Screen name="Marcações" component={Landing}
+                initialParams={{ UID: route.params.UID }}
                 options={{
                     header: () => <TopNavBar titulo="Marcações" />
                 }} />
-            <Tab.Screen name="Perfil" component={Schedule}
-                options={{
-                    header: () => <TopNavBar titulo="Perfil" />
-
-                }} />
+            <Tab.Screen name="Perfil" component={Profile}
+                initialParams={{ UID: route.params.UID }}
+            />
         </Tab.Navigator>
     )
 };
@@ -66,7 +67,7 @@ const Home = ({ navigation, route }) => {
     const [shadowOpacity, setShadowOpacity] = useState(0.35);
 
     return (
-        <Layout style={{ flex: 1, paddingRight: '5%', paddingLeft: '5%', paddingTop: '5%' }}>
+        <Layout style={{ flex: 1, paddingRight: '5%', paddingLeft: '5%', paddingTop: '15%' }}>
             <ScrollView>
                 <View>
                     <Text style={{ fontSize: '20', fontWeight: '300' }}>Olá!</Text>
@@ -113,73 +114,73 @@ const Home = ({ navigation, route }) => {
                         justifyContent: "space-between",
                         flexDirection: "row"
                     }}>
-                            {/* Card Unhas */}
-                            <Card style={[
-                                styles.servicesCard,
-                                {
-                                    shadowOffset: {
-                                        width: shadowOffsetWidth,
-                                        height: -shadowOffsetHeight,
-                                    },
-                                    shadowOpacity,
-                                    shadowRadius,
+                        {/* Card Unhas */}
+                        <Card style={[
+                            styles.servicesCard,
+                            {
+                                shadowOffset: {
+                                    width: shadowOffsetWidth,
+                                    height: -shadowOffsetHeight,
                                 },
-                            ]}>
-                                <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/nailsCard.png?alt=media&token=7eecf317-9927-4655-954f-2fe25334becf' }} />
-                                <Text style={{ marginTop: 10, textAlign: 'center' }}> Unhas </Text>
-                            </Card>
+                                shadowOpacity,
+                                shadowRadius,
+                            },
+                        ]}>
+                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/nailsCard.png?alt=media&token=7eecf317-9927-4655-954f-2fe25334becf' }} />
+                            <Text style={{ marginTop: 10, textAlign: 'center' }}> Unhas </Text>
+                        </Card>
 
-                            {/* Card Epilação */}
-                            <Card style={[
-                                styles.servicesCard,
-                                {
-                                    shadowOffset: {
-                                        width: shadowOffsetWidth,
-                                        height: -shadowOffsetHeight,
-                                    },
-                                    shadowOpacity,
-                                    shadowRadius,
+                        {/* Card Epilação */}
+                        <Card style={[
+                            styles.servicesCard,
+                            {
+                                shadowOffset: {
+                                    width: shadowOffsetWidth,
+                                    height: -shadowOffsetHeight,
                                 },
-                            ]}>
-                                <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/epilationCard.png?alt=media&token=b11e4835-c108-4445-a643-b85307a2708e' }} />
-                                <Text style={{ marginTop: 10, textAlign: 'center' }}> Epilação </Text>
-                            </Card>
+                                shadowOpacity,
+                                shadowRadius,
+                            },
+                        ]}>
+                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/epilationCard.png?alt=media&token=b11e4835-c108-4445-a643-b85307a2708e' }} />
+                            <Text style={{ marginTop: 10, textAlign: 'center' }}> Epilação </Text>
+                        </Card>
 
-                            {/* Card Threading */}
-                            <Card style={[
-                                styles.servicesCard,
-                                {
-                                    shadowOffset: {
-                                        width: shadowOffsetWidth,
-                                        height: -shadowOffsetHeight,
-                                    },
-                                    shadowOpacity,
-                                    shadowRadius,
+                        {/* Card Threading */}
+                        <Card style={[
+                            styles.servicesCard,
+                            {
+                                shadowOffset: {
+                                    width: shadowOffsetWidth,
+                                    height: -shadowOffsetHeight,
                                 },
-                            ]}>
-                                <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/threadingCard.png?alt=media&token=0f5603f2-267e-421a-9b38-7407c261e03c' }} />
-                                <Text style={{ marginTop: 10, textAlign: 'center' }}> Threading </Text>
-                            </Card>
+                                shadowOpacity,
+                                shadowRadius,
+                            },
+                        ]}>
+                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/threadingCard.png?alt=media&token=0f5603f2-267e-421a-9b38-7407c261e03c' }} />
+                            <Text style={{ marginTop: 10, textAlign: 'center' }}> Threading </Text>
+                        </Card>
 
-                            {/* Card Pestanas */}
-                            <Card style={[
-                                styles.servicesCard,
-                                {
-                                    shadowOffset: {
-                                        width: shadowOffsetWidth,
-                                        height: -shadowOffsetHeight,
-                                    },
-                                    shadowOpacity,
-                                    shadowRadius,
+                        {/* Card Pestanas */}
+                        <Card style={[
+                            styles.servicesCard,
+                            {
+                                shadowOffset: {
+                                    width: shadowOffsetWidth,
+                                    height: -shadowOffsetHeight,
                                 },
-                            ]}>
-                                <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/eyelashesCard.png?alt=media&token=ec101fdb-6035-493f-ba42-5cf79a6b508e' }} />
-                                <Text style={{ marginTop: 10, textAlign: 'center' }}> Pestanas </Text>
-                            </Card>
+                                shadowOpacity,
+                                shadowRadius,
+                            },
+                        ]}>
+                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/eyelashesCard.png?alt=media&token=ec101fdb-6035-493f-ba42-5cf79a6b508e' }} />
+                            <Text style={{ marginTop: 10, textAlign: 'center' }}> Pestanas </Text>
+                        </Card>
                     </View>
                 </View>
             </ScrollView>
-        </Layout>
+        </Layout >
     );
 }
 
