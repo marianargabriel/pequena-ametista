@@ -1,29 +1,41 @@
 import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native';
-import { Layout, Text, Avatar, Icon, Input, Button } from '@ui-kitten/components';
-import database from "../firebaseConnection";
+import { Layout, Text, Input } from '@ui-kitten/components';
+import {db} from "../firebaseConnection";
+import { doc, getDoc } from "firebase/firestore";
 import { FlatList } from 'react-native';
 
 
 export default function InfoPessoal({ navigation, route }) {
+    const [nomeUser, setNomeUser] = React.useState('');
+    
+    async function getUsers() {
+        const docRef = doc(db, "users", route.params.UID);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            setNomeUser(doc.data().nome)
+        } else {
+            setNomeUser('Erro');
+        }
+    }
+    
     React.useLayoutEffect(() => {
-        navigation.setOptions({
-            title: 'Informações de ' + route.params.users,
-        });
+        getUsers();
+        if (nomeUser != 'Erro' || nomeUser != '') {
+            navigation.setOptions({
+                title: 'Informações de ' + nomeUser,
+            });
+        } else {
+            navigation.setOptions({
+                title: 'Erro a encontrar o utilizador!',
+            });
+        }
+        
     }, [navigation]);
 
     const [users, setUsers] = useState([])
-
-    useEffect(() => {
-        database.collection("users").onSnapshot((query) => {
-            const list = []
-            query.forEach((doc) => {
-                list.push({ ...doc.data(), nome: doc.nome })
-            });
-            setUsers(list)
-        })
-    }, [])
 
     // const dataNasc = route.params.diaNasc.toString() + '/' + route.params.mesNasc.toString() + '/' + route.params.anoNasc.toString()
 

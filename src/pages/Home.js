@@ -19,6 +19,7 @@ import Landing from './Landing';
 import Schedule from './Schedule';
 import AboutUs from './AboutUs';
 import Profile from './Profile';
+import CostumersList from './CostumersList';
 
 const { width } = Dimensions.get('window');
 
@@ -38,15 +39,14 @@ const HomeScreen = ({ navigation, route }) => {
                 options={{
                     header: () => <TopNavBar titulo="Sobre Nós" />
                 }} />
-            <Tab.Screen name="Agendar" component={Schedule}
-                initialParams={{ UID: route.params.UID }}
+            <Tab.Screen name="Clientes" component={CostumersList}
                 options={{
-                    header: () => <TopNavBar titulo="Agendar" />
+                    header:  () => <TopNavBar titulo="Clientes" />
                 }} />
             <Tab.Screen name="Marcações" component={Landing}
                 initialParams={{ UID: route.params.UID }}
                 options={{
-                    header: () => <TopNavBar titulo="Marcações" />
+                    header: () => <TopNavBar titulo="Marcações"/>
                 }} />
             <Tab.Screen name="Perfil" component={Profile}
                 initialParams={{ UID: route.params.UID }}
