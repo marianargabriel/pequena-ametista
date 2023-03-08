@@ -6,7 +6,7 @@ export default function AboutUs() {
     return (
         <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View>
-                <Text>Hello, world! This is page of about us.</Text>
+                <Text>Hello world, this is about us page!</Text>
             </View>
         </Layout>
     );

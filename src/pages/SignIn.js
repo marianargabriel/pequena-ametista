@@ -42,7 +42,7 @@ const SignIn = ({ navigation, route }) => {
 
     const renderIcon = (props) => (
         <TouchableWithoutFeedback onPress={toggleSecureEntry}>
-            <Icon {...props} fill='#000000' name={secureTextEntry ? 'eye-off' : 'eye'} />
+            <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'} />
         </TouchableWithoutFeedback>
     );
 
@@ -156,7 +156,7 @@ const SignIn = ({ navigation, route }) => {
                     </View>
 
                     <View style={{ flexDirection: 'row', marginTop: '5%' }}>
-                        <Text>Já tem conta?</Text><Text style={{ color: '#8288C3' }} onPress={() => navigation.navigate('LogIn')}> Iniciar Sessão</Text>
+                        <Text style={{ fontWeight: '300' }}>Já tem conta?</Text><Text style={{ color: '#8288C3', fontWeight: '300' }} onPress={() => navigation.navigate('LogIn')}> Iniciar Sessão</Text>
                     </View>
 
                     {/* Email já em uso */}
@@ -171,9 +171,9 @@ const SignIn = ({ navigation, route }) => {
                                     fill='red'
                                     name='alert-triangle-outline'
                                 />
-                                <Text style={{ marginBottom: 20, fontWeight: 'bold', }}>Erro</Text>
+                                <Text style={{ marginBottom: 20, fontWeight: '400', }}>Erro</Text>
                             </View>
-                            <Text>Este endereço de email já está a ser utilizado. Tente recuperar a palavra-passe.</Text>
+                            <Text style={{ fontWeight: '300' }}>Este endereço de email já está a ser utilizado. Tente recuperar a palavra-passe.</Text>
                             <View style={styles.btnAgain} >
                                 <Button title='Tentar Novamente' color='#fff' onPress={() => setVisibleEmailUsed(false)} />
                             </View>
@@ -192,9 +192,9 @@ const SignIn = ({ navigation, route }) => {
                                     fill='red'
                                     name='alert-triangle-outline'
                                 />
-                                <Text style={{ marginBottom: 20, fontWeight: 'bold', }}>Erro</Text>
+                                <Text style={{ marginBottom: 20, fontWeight: '400', }}>Erro</Text>
                             </View>
-                            <Text >Insira um endereço de email válido.</Text>
+                            <Text style={{ fontWeight: '300' }}>Insira um endereço de email válido.</Text>
                             <View style={styles.btnAgain} >
                                 <Button title='Tentar Novamente' color='#fff' onPress={() => setVisibleEmail(false)} />
                             </View>
@@ -213,9 +213,9 @@ const SignIn = ({ navigation, route }) => {
                                     fill='red'
                                     name='alert-triangle-outline'
                                 />
-                                <Text style={{ marginBottom: 20, fontWeight: 'bold', }}>Erro</Text>
+                                <Text style={{ marginBottom: 20, fontWeight: '400', }}>Erro</Text>
                             </View>
-                            <Text>Insira uma palavra-passe e confirme-a.</Text>
+                            <Text style={{ fontWeight: '300' }}>Insira uma palavra-passe e confirme-a.</Text>
                             <View style={styles.btnAgain} >
                                 <Button title='Tentar Novamente' color='#fff' onPress={() => setVisibleNull(false)} />
                             </View>
@@ -234,9 +234,9 @@ const SignIn = ({ navigation, route }) => {
                                     fill='red'
                                     name='alert-triangle-outline'
                                 />
-                                <Text style={{ marginBottom: 20, fontWeight: 'bold', }}>Erro</Text>
+                                <Text style={{ marginBottom: 20, fontWeight: '400', }}>Erro</Text>
                             </View>
-                            <Text>A palavra-passe é muito fraca. Crie uma palavra-passe com no mínimo 6 caracteres.</Text>
+                            <Text style={{ fontWeight: '300' }}>A palavra-passe é muito fraca. Crie uma palavra-passe com no mínimo 6 caracteres.</Text>
                             <View style={styles.btnAgain} >
                                 <Button title='Tentar Novamente' color='#fff' onPress={() => setVisiblePassCurta(false)} />
                             </View>
@@ -255,9 +255,9 @@ const SignIn = ({ navigation, route }) => {
                                     fill='red'
                                     name='alert-triangle-outline'
                                 />
-                                <Text style={{ marginBottom: 20, fontWeight: 'bold', }}>Erro</Text>
+                                <Text style={{ marginBottom: 20, fontWeight: '400', }}>Erro</Text>
                             </View>
-                            <Text>As palavra-passes que inseriu não coincidem.</Text>
+                            <Text style={{ fontWeight: '300' }}>As palavra-passes que inseriu não coincidem.</Text>
                             <View style={styles.btnAgain} >
                                 <Button title='Tentar Novamente' color='#fff' onPress={() => setVisiblePassDif(false)} />
                             </View>
@@ -270,7 +270,7 @@ const SignIn = ({ navigation, route }) => {
                         backdropStyle={styles.backdrop}>
                         <Card disabled={true} style={{ borderRadius: 15, }}>
                             <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                                <Text style={{ marginBottom: 20 }}>Antes de continuar, insira os últimos dados necessários:</Text>
+                                <Text style={{ marginBottom: 20, fontWeight: '300' }}>Antes de continuar, insira os últimos dados necessários:</Text>
                             </View>
                             <Text style={styles.errorMessage}>{errorMessage}</Text>
                             <Input style={styles.inputName}
@@ -301,7 +301,6 @@ const SignIn = ({ navigation, route }) => {
                             </View>
                         </Card>
                     </Modal>
-
                 </Layout >
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

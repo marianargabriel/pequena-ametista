@@ -6,7 +6,7 @@ export default function Schedule() {
     return (
         <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View>
-                <Text>Hello, world! This is page of schedule.</Text>
+                <Text>Hello world, this is schedule page!</Text>
             </View>
         </Layout>
     );

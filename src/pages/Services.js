@@ -6,7 +6,7 @@ export default function Services() {
     return (
         <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View>
-                <Text>Hello, world! This is page of services.</Text>
+                <Text>Hello world, this is services page!</Text>
             </View>
         </Layout>
     );

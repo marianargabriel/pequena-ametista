@@ -93,12 +93,8 @@ const styles = StyleSheet.create({
   errorMessage: {
     fontSize: 10,
     color: "red",
+    fontWeight: '300',
   },
-
-
-
-
-
 });
 
 export default styles;

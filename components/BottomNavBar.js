@@ -7,8 +7,8 @@ const HomeIcon = (props) => (
     <Icon {...props} name='home-outline' />
 );
 
-const InfoIcon = (props) => (
-    <Icon {...props} name='people-outline' />
+const ContactoIcon = (props) => (
+    <Icon {...props} name='phone-outline' />
 );
 
 const AgendarIcon = (props) => (
@@ -35,7 +35,7 @@ const BottomNavBar = ({ navigation, state}) => {
                 selectedIndex={state.index}
                 onSelect = {index => navigation.navigate(state.routeNames[index])}>
                 <BottomNavigationTab title='INÍCIO' icon={HomeIcon} />
-                <BottomNavigationTab title='SOBRE NÓS' icon={InfoIcon} />
+                <BottomNavigationTab title='CONTACTO' icon={ContactoIcon} />
                 <BottomNavigationTab title='AGENDAR' icon={AgendarIcon} />
                 <BottomNavigationTab title='MARCAÇÕES' icon={MarcacoesIcon} />
                 <BottomNavigationTab title='PERFIL' icon={PersonIcon} />

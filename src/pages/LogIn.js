@@ -117,7 +117,7 @@ const LogIn = ({ navigation, route }) => {
               }} />
             </View>
             <View style={{ flexDirection: 'row', marginTop: '5%' }}>
-              <Text>Ainda não tem conta?</Text><Text style={{ color: '#8288C3' }} onPress={() => navigation.navigate('SignIn')}> Criar</Text>
+              <Text style={{ fontWeight: '300' }} >Ainda não tem conta?</Text><Text style={{ color: '#8288C3', fontWeight: '300' }} onPress={() => navigation.navigate('SignIn')}> Criar</Text>
             </View>
 
             <Modal

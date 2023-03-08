@@ -20,6 +20,7 @@ import Schedule from './Schedule';
 import AboutUs from './AboutUs';
 import Profile from './Profile';
 import CostumersList from './CostumersList';
+import Contact from './Contact';
 
 const { width } = Dimensions.get('window');
 
@@ -35,18 +36,18 @@ const HomeScreen = ({ navigation, route }) => {
                     headerShown: false
                 }} />
 
-            <Tab.Screen name="Sobre Nós" component={AboutUs}
+            <Tab.Screen name="Contacto" component={Contact}
                 options={{
-                    header: () => <TopNavBar titulo="Sobre Nós" />
+                    headerShown: false
                 }} />
             <Tab.Screen name="Clientes" component={CostumersList}
                 options={{
-                    header:  () => <TopNavBar titulo="Clientes" />
+                    header: () => <TopNavBar titulo="Clientes" />
                 }} />
-            <Tab.Screen name="Marcações" component={Landing}
+            <Tab.Screen name="Marcações" component={Schedule}
                 initialParams={{ UID: route.params.UID }}
                 options={{
-                    header: () => <TopNavBar titulo="Marcações"/>
+                    header: () => <TopNavBar titulo="Marcações" />
                 }} />
             <Tab.Screen name="Perfil" component={Profile}
                 initialParams={{ UID: route.params.UID }}
@@ -84,26 +85,26 @@ const Home = ({ navigation, route }) => {
                     <Text style={styles.titles}>Próximas Marcações</Text>
                     <View style={styles.scheduleContent}>
                         <View style={styles.contextLeft}>
-                            <Text style={styles.date}>09/02/2023</Text>
+                            <Text style={{ fontWeight: '300' }}>09/02/2023</Text>
                         </View>
                         <View style={styles.verticleLine}></View>
                         <View style={styles.contextCenter}>
-                            <Text style={styles.hour}>10:25</Text>
+                            <Text style={{ fontWeight: '300' }}>10:25</Text>
                         </View>
                         <View style={styles.contextRight}>
-                            <Text style={styles.details} onPress={() => navigation.navigate('Schedule')} >Ver Detalhes</Text>
+                            <Text style={styles.details} onPress={() => navigation.navigate('Scheduling')} >Ver Detalhes</Text>
                         </View>
                     </View>
                     <View style={styles.scheduleContent}>
                         <View style={styles.contextLeft}>
-                            <Text style={styles.date}>09/02/2023</Text>
+                            <Text style={{ fontWeight: '300' }}>09/02/2023</Text>
                         </View>
                         <View style={styles.verticleLine}></View>
                         <View style={styles.contextCenter}>
-                            <Text style={styles.hour}>10:25</Text>
+                            <Text style={{ fontWeight: '300' }}>10:25</Text>
                         </View>
                         <View style={styles.contextRight}>
-                            <Text style={styles.details} onPress={() => navigation.navigate('Schedule')} >Ver Detalhes</Text>
+                            <Text style={styles.details} onPress={() => navigation.navigate('Scheduling')} >Ver Detalhes</Text>
                         </View>
                     </View>
 
@@ -127,7 +128,7 @@ const Home = ({ navigation, route }) => {
                             },
                         ]}>
                             <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/nailsCard.png?alt=media&token=7eecf317-9927-4655-954f-2fe25334becf' }} />
-                            <Text style={{ marginTop: 10, textAlign: 'center' }}> Unhas </Text>
+                            <Text style={styles.servicesText}> Unhas </Text>
                         </Card>
 
                         {/* Card Epilação */}
@@ -143,7 +144,7 @@ const Home = ({ navigation, route }) => {
                             },
                         ]}>
                             <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/epilationCard.png?alt=media&token=b11e4835-c108-4445-a643-b85307a2708e' }} />
-                            <Text style={{ marginTop: 10, textAlign: 'center' }}> Epilação </Text>
+                            <Text style={styles.servicesText}> Epilação </Text>
                         </Card>
 
                         {/* Card Threading */}
@@ -159,7 +160,7 @@ const Home = ({ navigation, route }) => {
                             },
                         ]}>
                             <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/threadingCard.png?alt=media&token=0f5603f2-267e-421a-9b38-7407c261e03c' }} />
-                            <Text style={{ marginTop: 10, textAlign: 'center' }}> Threading </Text>
+                            <Text style={styles.servicesText}> Threading </Text>
                         </Card>
 
                         {/* Card Pestanas */}
@@ -175,10 +176,11 @@ const Home = ({ navigation, route }) => {
                             },
                         ]}>
                             <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/eyelashesCard.png?alt=media&token=ec101fdb-6035-493f-ba42-5cf79a6b508e' }} />
-                            <Text style={{ marginTop: 10, textAlign: 'center' }}> Pestanas </Text>
+                            <Text style={styles.servicesText}> Pestanas </Text>
                         </Card>
                     </View>
                 </View>
+                <Text style={styles.seeAll} onPress={() => navigation.navigate('Services')}>Ver Tudo</Text>
             </ScrollView>
         </Layout >
     );
@@ -210,6 +212,14 @@ const styles = StyleSheet.create({
         marginBottom: '5%'
     },
 
+    seeAll: {
+        marginTop: '1%',
+        color: '#242961',
+        textDecorationLine: 'underline',
+        alignItems: "flex-end",
+        fontWeight: '300',
+    },
+
     scheduleContent: {
         width: "100%",
         height: "auto",
@@ -237,6 +247,12 @@ const styles = StyleSheet.create({
         marginLeft: 115,
     },
 
+    details: {
+        color: '#242961',
+        textDecorationLine: 'underline',
+        fontWeight: '300',
+    },
+
     contextRight: {
         width: "50%",
         alignItems: "flex-end",
@@ -250,6 +266,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         shadowColor: 'black',
         marginRight: '2%',
+    },
+
+    servicesText: {
+        fontWeight: '300',
+        marginTop: 10,
+        textAlign: 'center',
     },
 });
 

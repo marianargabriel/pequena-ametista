@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
   text_init: {
     fontSize: '25%',
-    fontWeight: '500',
+    fontWeight: '400',
     textAlign: 'left',
     marginLeft: '-25%',
     marginBottom: '10%',

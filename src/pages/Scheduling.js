@@ -6,7 +6,7 @@ export default function Scheduling() {
     return (
         <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View>
-                <Text>Hello, world! This is page of scheduling.</Text>
+                <Text>Hello world, this is scheduling page!</Text>
             </View>
         </Layout>
     );
