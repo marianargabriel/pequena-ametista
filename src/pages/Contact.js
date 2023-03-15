@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Linking, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Linking, TouchableOpacity, ScrollView, Button } from 'react-native';
 import { Layout, Card, Icon, Input } from '@ui-kitten/components';
 
 export default function Contact() {
@@ -12,7 +12,7 @@ export default function Contact() {
     const multilineInputState = mensageInput();
 
     return (
-        <Layout style={{ flex: 1, paddingRight: '5%', paddingLeft: '5%', paddingTop: '20%', alignContent: 'center' }}>
+        <Layout style={{ flex: 1, paddingRight: '5%', paddingLeft: '5%', paddingTop: '15%', alignContent: 'center' }}>
             <ScrollView>
                 <View>
                     <Text style={{ fontSize: '24', fontWeight: '400', textAlign: 'center' }}>Entre em Contacto!</Text>
@@ -47,15 +47,18 @@ export default function Contact() {
                         <Text style={styles.textBtn} >loremipsum@gmail.com</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ marginTop: '-8%' }}>
+                <View style={{ marginTop: '-12%' }}>
                     <Text style={{ fontSize: '20', fontWeight: '300', marginBottom: '2%' }} >Mensagem</Text>
                     <React.Fragment>
                         <Input
                             multiline={true}
-                            textStyle={{ minHeight: 64 }}
-                            placeholder='Escreva aqui...'
+                            textStyle={{ minHeight: 80 }}
+                            placeholder='Escreva aqui a sua mensagem'
                         />
                     </React.Fragment>
+                    <View style={styles.btnSubmit}>
+                        <Button title='Submeter' color='#fff' />
+                    </View>
                 </View>
             </ScrollView>
         </Layout>
@@ -77,7 +80,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         width: '100%',
-        height: '25%',
+        height: '24%',
     },
 
     textBtn: {
@@ -86,4 +89,14 @@ const styles = StyleSheet.create({
         fontWeight: '300',
     },
 
+    btnSubmit: {
+        backgroundColor: '#8288C3',
+        height: 45,
+        width: '32%',
+        borderRadius: 10,
+        marginTop: '2%',
+        marginLeft: '68%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 })
