@@ -5,30 +5,48 @@ import { View, StyleSheet, ScrollView, Button, Text } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 
 //firebase
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebaseConnection';
 
 export default function Services({ navigation }) {
     const [servicesData, setServiceData] = useState([]);
     let data = [];
-    let i = 0
+    let load = false;
     let services = ['Epilação', 'Manicure', 'Pestanas e Sobrancelhas', 'Threading'];
+    let servicesTitulos = [{ 'titulo': 'Epilação' }, { 'titulo': 'Manicure' }, { 'titulo': 'Pestanas e Sobrancelhas' }, { 'titulo': 'Threading' }];
+    let epilacao = ['Abdómen', 'Axilas', 'Braços', 'Buço', 'Costas', 'Coxa', 'Glúteos', 'Linha Alba', 'Lombar', 'Meia Perna', 'Meio Braço', 'Ombros', 'Peito', 'Perna Inteira', 'Queixo', 'Rosto', 'Sobrancelhas', 'Virilha Cavada', 'Virilha Completa'];
+    let manicure = ['Aplicação - Unhas de Gel', 'Aplicação - Verniz Gel', 'Manutenção - Unhas de Gel', 'Manutenção - Verniz Gel', 'Reparação Unha'];
+    let pestSobran = ['Aplicação - Extensão de Pestanas', 'Lifting de Pestanas', 'Manutenção - Extensão de Pestanas', 'Permanente de Sobrancelhas', 'Pintura de Pestanas'];
+    let threading = ['Buço', 'Linha Alba', 'Maças do Rosto', 'Nariz', 'Orelhas', 'Queixo', 'Rosto', 'Sobrancelhas'];
 
-    useEffect(async () => {
-        for (i = 0; i >= services.length; i++) {
-            console.log(services[i])
+    async function getServ() {
+        for (let i = 0; i < services.length; i++) {
+            const servRef = doc(db, "services", services[i]);
+            const servicesDoc = await getDoc(servRef);
+
+            if (servicesDoc.exists()) {
+                let r = i == 0 ? epilacao.length : i == 1 ? manicure.length : i == 2 ? pestSobran.length : i == 3 ? threading.length : epilacao.length
+                for (let j = 0; j < r; j++) {
+                    data.push({
+                        tipo: services[i],
+                        subTipo: i == 0 ? epilacao[j] : i == 1 ? manicure[j] : i == 2 ? pestSobran[j] : i == 3 ? threading[j] : epilacao[j],
+                        duracao: i == 0 ? servicesDoc.data()[epilacao[j]].Duração : i == 1 ? servicesDoc.data()[manicure[j]].Duração : i == 2 ? servicesDoc.data()[pestSobran[j]].Duração : i == 3 ? servicesDoc.data()[threading[j]].Duração : servicesDoc.data()[epilacao[j]].Duração,
+                        preco: i == 0 ? servicesDoc.data()[epilacao[j]].Preço.toFixed(2) : i == 1 ? servicesDoc.data()[manicure[j]].Preço.toFixed(2) : i == 2 ? servicesDoc.data()[pestSobran[j]].Preço.toFixed(2) : i == 3 ? servicesDoc.data()[threading[j]].Preço.toFixed(2) : servicesDoc.data()[epilacao[j]].Preço.toFixed(2),
+                    })
+
+                }
+                load = true;
+            } else {
+                console.log("No such document!");
+            }
         }
-        // const servRef = doc(db, "cities", "SF");
-        // const services = await getDoc(servRef);
+        if (load) {
+            setServiceData(data);
+        }
+    }
 
-        // if (services.exists()) {
-        //     console.log("Document data:", services.data());
-
-
-        // } else {
-        //     // doc.data() will be undefined in this case
-        //     console.log("No such document!");
-        // }
+    useEffect(() => {
+        getServ();
     }, []);
 
     const [shadowOffsetWidth, setShadowOffsetWidth] = useState(4);
@@ -39,57 +57,65 @@ export default function Services({ navigation }) {
     return (
         <Layout style={{ flex: 1, padding: '5%' }}>
             <ScrollView>
-                <Text style={styles.titles}>Manicure</Text>
-                <View style={{ marginBottom: '15%' }}>
-                    <Text style={styles.textServices}>Aplicação - Unhas de Gel</Text>
-                    <View style={styles.textPrice}>
-                        <Text style={styles.textPrice}>20.00€</Text>
-                    </View>
-
-                    <Text style={styles.textServices}>Aplicação - Verniz Gel</Text>
-                    <View style={styles.textPrice}>
-                        <Text style={styles.textPrice}>13.00€</Text>
-                    </View>
-                </View>
-
-                <Text style={styles.titles}>Epilação</Text>
-                <View style={{ marginBottom: '15%' }}>
-                    <Text style={styles.textServices}>Abdómen</Text>
-                    <View style={styles.textPrice}>
-                        <Text style={styles.textPrice}>8.00€</Text>
-                    </View>
-
-                    <Text style={styles.textServices}>Axilas</Text>
-                    <View style={styles.textPrice}>
-                        <Text style={styles.textPrice}>6.00€</Text>
-                    </View>
-                </View>
-
-                <Text style={styles.titles}>Threading</Text>
-                <View style={{ marginBottom: '15%' }}>
-                    <Text style={styles.textServices}>Buço</Text>
-                    <View style={styles.textPrice}>
-                        <Text style={styles.textPrice}>5.00€</Text>
-                    </View>
-
-                    <Text style={styles.textServices}>Linha Alba</Text>
-                    <View style={styles.textPrice}>
-                        <Text style={styles.textPrice}>4.00€</Text>
-                    </View>
-                </View>
-
-                <Text style={styles.titles}>Pestanas e Sobrancelhas</Text>
-                <View style={{ marginBottom: '15%' }}>
-                    <Text style={styles.textServices}>Aplicação - Extensão de Pestanas</Text>
-                    <View style={styles.textPrice}>
-                        <Text style={styles.textPrice}>35.00€</Text>
-                    </View>
-
-                    <Text style={styles.textServices}>Lifting de Pestanas</Text>
-                    <View style={styles.textPrice}>
-                        <Text style={styles.textPrice}>20.00€</Text>
-                    </View>
-                </View>
+                {servicesTitulos.map(({ titulo }, index) => {
+                    return (
+                        <>
+                            <Text style={styles.titles}>{titulo}</Text>
+                            <View style={{ marginBottom: '15%' }}>
+                                {servicesData.map(({ tipo, subTipo, duracao, preco }, id) => {
+                                    if (index == 0) {
+                                        if (id <= 18) {
+                                            return (
+                                                <>
+                                                    <Text style={styles.textServices}>{subTipo}</Text>
+                                                    <View style={styles.textPrice}>
+                                                        <Text style={styles.textPrice}>{preco}€</Text>
+                                                    </View>
+                                                </>
+                                            )
+                                        }
+                                    }
+                                    else if (index == 1) {
+                                        if (id >= 19 && id <= 23) {
+                                            return (
+                                                <>
+                                                    <Text style={styles.textServices}>{subTipo}</Text>
+                                                    <View style={styles.textPrice}>
+                                                        <Text style={styles.textPrice}>{preco}€</Text>
+                                                    </View>
+                                                </>
+                                            )
+                                        }
+                                    }
+                                    else if (index == 2) {
+                                        if (id >= 24 && id <= 28) {
+                                            return (
+                                                <>
+                                                    <Text style={styles.textServices}>{subTipo}</Text>
+                                                    <View style={styles.textPrice}>
+                                                        <Text style={styles.textPrice}>{preco}€</Text>
+                                                    </View>
+                                                </>
+                                            )
+                                        }
+                                    }
+                                    else if (index == 3) {
+                                        if (id >= 29 && id <= 37) {
+                                            return (
+                                                <>
+                                                    <Text style={styles.textServices}>{subTipo}</Text>
+                                                    <View style={styles.textPrice}>
+                                                        <Text style={styles.textPrice}>{preco}€</Text>
+                                                    </View>
+                                                </>
+                                            )
+                                        }
+                                    }
+                                })}
+                            </View>
+                        </>
+                    )
+                })}
 
             </ScrollView>
             <View style={styles.btnSchedule}>
@@ -111,7 +137,8 @@ const styles = StyleSheet.create({
         height: 45,
         width: '80%',
         borderRadius: 10,
-        marginTop: '10%',
+        marginTop: '2%',
+        marginBottom: '2%',
         marginLeft: '10%',
         justifyContent: 'center',
         alignItems: 'center'

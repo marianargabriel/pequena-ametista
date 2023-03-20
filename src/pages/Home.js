@@ -237,6 +237,7 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
         alignItems: "flex-end",
         fontWeight: '300',
+        marginBottom: 25
     },
 
     scheduleContent: {
