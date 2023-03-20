@@ -1,4 +1,4 @@
-import React, { Profiler, useState } from 'react';
+import React, { Profiler, useState, useEffect } from 'react';
 import { View, Image, Dimensions, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -10,17 +10,19 @@ import BottomNavBar from '../../components/BottomNavBar';
 import TopNavBar from "../../components/TopNavBar"
 
 // database
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth"
-import database from '../firebaseConnection';
+import { doc, getDoc } from "firebase/firestore"
+import { db } from '../firebaseConnection';
 
 // pages
 import LogIn from './LogIn';
 import Landing from './Landing';
 import Schedule from './Schedule';
+import Scheduling from './Scheduling';
 import AboutUs from './AboutUs';
 import Profile from './Profile';
 import CostumersList from './CostumersList';
 import Contact from './Contact';
+import { async } from '@firebase/util';
 
 const { width } = Dimensions.get('window');
 
@@ -32,26 +34,24 @@ const HomeScreen = ({ navigation, route }) => {
             tabBar={props => <BottomNavBar {...props} />}
         >
             <Tab.Screen name="Início" component={Home}
+                initialParams={{ UID: route.params.UID }}
                 options={{
                     headerShown: false
                 }} />
 
             <Tab.Screen name="Contacto" component={Contact}
+                initialParams={{ UID: route.params.UID }}
                 options={{
                     headerShown: false
                 }} />
-            <Tab.Screen name="Clientes" component={CostumersList}
-                options={{
-                    header: () => <TopNavBar titulo="Clientes" />
-                }} />
+            <Tab.Screen name="Agendar" component={Scheduling}
+                initialParams={{ UID: route.params.UID }}/>
+
             <Tab.Screen name="Marcações" component={Schedule}
-                initialParams={{ UID: route.params.UID }}
-                options={{
-                    header: () => <TopNavBar titulo="Marcações" />
-                }} />
+                initialParams={{ UID: route.params.UID }}/>
+
             <Tab.Screen name="Perfil" component={Profile}
-                initialParams={{ UID: route.params.UID }}
-            />
+                initialParams={{ UID: route.params.UID }}/>
         </Tab.Navigator>
     )
 };
@@ -61,6 +61,25 @@ const Home = ({ navigation, route }) => {
     const [Name, setName] = React.useState('');
     const [Phone, setPhone] = React.useState('');
 
+    const [userData, setUserData] = useState([]);
+
+    async function getUserData() {
+        console.log(route.params.UID)
+        const userRef = doc(db, "users", route.params.UID);
+        const user = await getDoc(userRef);
+
+        if (user.exists()) {
+            console.log("User nome:", user.data().nome);
+            setUserData(user.data())
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }
+
+    useEffect(() => {
+        getUserData();
+    }, [])
 
     const [shadowOffsetWidth, setShadowOffsetWidth] = useState(4);
     const [shadowOffsetHeight, setShadowOffsetHeight] = useState(4);
@@ -72,7 +91,7 @@ const Home = ({ navigation, route }) => {
             <ScrollView>
                 <View>
                     <Text style={{ fontSize: '20', fontWeight: '300' }}>Olá!</Text>
-                    <Text style={{ fontSize: '24', fontWeight: '500' }}>Lorem Ipsum</Text>
+                    <Text style={{ fontSize: '24', fontWeight: '500' }}>{userData.nome != undefined ? userData.nome : 'Loading . . .'}</Text>
                     <Image style={{ width: width * 0.9, height: width * 0.55, borderRadius: 20, marginTop: '5%' }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/sobreNos.png?alt=media&token=b61ecd03-1c68-42fe-a4a4-92c0950b48ad' }}></Image>
                     <TouchableOpacity style={styles.arrowBtn} onPress={() => navigation.navigate('AboutUs')}>
                         <Icon

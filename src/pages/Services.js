@@ -1,10 +1,35 @@
-import React, { Profiler, useState } from 'react';
+import React, { Profiler, useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Button, Text } from 'react-native';
 
 // ui kitten
 import { Layout } from '@ui-kitten/components';
 
-export default function Services({navigation}) {
+//firebase
+import { doc, setDoc } from "firebase/firestore";
+import { db } from '../firebaseConnection';
+
+export default function Services({ navigation }) {
+    const [servicesData, setServiceData] = useState([]);
+    let data = [];
+    let i = 0
+    let services = ['Epilação', 'Manicure', 'Pestanas e Sobrancelhas', 'Threading'];
+
+    useEffect(async () => {
+        for (i = 0; i >= services.length; i++) {
+            console.log(services[i])
+        }
+        // const servRef = doc(db, "cities", "SF");
+        // const services = await getDoc(servRef);
+
+        // if (services.exists()) {
+        //     console.log("Document data:", services.data());
+
+
+        // } else {
+        //     // doc.data() will be undefined in this case
+        //     console.log("No such document!");
+        // }
+    }, []);
 
     const [shadowOffsetWidth, setShadowOffsetWidth] = useState(4);
     const [shadowOffsetHeight, setShadowOffsetHeight] = useState(4);
@@ -33,7 +58,7 @@ export default function Services({navigation}) {
                     <View style={styles.textPrice}>
                         <Text style={styles.textPrice}>8.00€</Text>
                     </View>
-                    
+
                     <Text style={styles.textServices}>Axilas</Text>
                     <View style={styles.textPrice}>
                         <Text style={styles.textPrice}>6.00€</Text>
@@ -46,7 +71,7 @@ export default function Services({navigation}) {
                     <View style={styles.textPrice}>
                         <Text style={styles.textPrice}>5.00€</Text>
                     </View>
-                    
+
                     <Text style={styles.textServices}>Linha Alba</Text>
                     <View style={styles.textPrice}>
                         <Text style={styles.textPrice}>4.00€</Text>
@@ -59,7 +84,7 @@ export default function Services({navigation}) {
                     <View style={styles.textPrice}>
                         <Text style={styles.textPrice}>35.00€</Text>
                     </View>
-                    
+
                     <Text style={styles.textServices}>Lifting de Pestanas</Text>
                     <View style={styles.textPrice}>
                         <Text style={styles.textPrice}>20.00€</Text>

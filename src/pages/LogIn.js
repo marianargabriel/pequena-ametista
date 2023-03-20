@@ -131,7 +131,7 @@ const LogIn = ({ navigation, route }) => {
                     fill='red'
                     name='alert-triangle-outline'
                   />
-                  <Text style={{ marginBottom: 20, fontWeight: 'bold', }}>Alerta!</Text>
+                  <Text style={{ marginBottom: 20, fontWeight: '400' }}>Alerta!</Text>
                 </View>
                 <Text> Palavra-passe ou endereço de email incorretos.</Text>
                 <View style={styles.btnAgain}>
