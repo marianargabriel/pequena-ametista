@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     textServices: {
         fontWeight: '300',
         fontSize: '17',
+        marginBottom: 3,
     },
 
     textPrice: {
@@ -154,5 +155,6 @@ const styles = StyleSheet.create({
         fontSize: '17',
         marginTop: '-2.8%',
         alignItems: "flex-end",
+        marginBottom: 3,
     },
 });

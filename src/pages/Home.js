@@ -64,8 +64,8 @@ const Home = ({ navigation, route }) => {
     const [userData, setUserData] = useState([]);
 
     async function getUserData() {
-        console.log(route.params.UID)
-        const userRef = doc(db, "users", route.params.UID);
+        console.log(params.UID)
+        const userRef = doc(db, "users", params.UID);
         const user = await getDoc(userRef);
 
         if (user.exists()) {
@@ -91,7 +91,7 @@ const Home = ({ navigation, route }) => {
             <ScrollView>
                 <View>
                     <Text style={{ fontSize: '20', fontWeight: '300' }}>Olá!</Text>
-                    <Text style={{ fontSize: '24', fontWeight: '500' }}>{userData.nome != undefined ? userData.nome : 'Loading . . .'}</Text>
+                    <Text style={{ fontSize: '24', fontWeight: '500' }}>{userData.nome != undefined ? userData.nome : 'Loading...'}</Text>
                     <Image style={{ width: width * 0.9, height: width * 0.55, borderRadius: 20, marginTop: '5%' }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/sobreNos.png?alt=media&token=b61ecd03-1c68-42fe-a4a4-92c0950b48ad' }}></Image>
                     <TouchableOpacity style={styles.arrowBtn} onPress={() => navigation.navigate('AboutUs')}>
                         <Icon

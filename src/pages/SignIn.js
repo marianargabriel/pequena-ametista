@@ -6,13 +6,15 @@ import { Layout, Text, Input, Icon, Card, Modal } from '@ui-kitten/components';
 
 // database
 import { doc, setDoc } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../firebaseConnection';
 
 // styles
 import styles from "../styles";
 
 const { width } = Dimensions.get('window');
+
+
 
 const SignIn = ({ navigation, route }) => {
     const params = route.params
@@ -21,6 +23,7 @@ const SignIn = ({ navigation, route }) => {
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [Name, setName] = React.useState('');
     const [Phone, setPhone] = React.useState('');
+    const [createUser, setCreateUser] = React.useState(false);
     const [] = useState(null)
 
     const [secureTextEntry, setSecureTextEntry] = React.useState(true);
@@ -76,7 +79,12 @@ const SignIn = ({ navigation, route }) => {
         await setDoc(doc(db, "users", uid), {
             nome: Name,
             numero: parseInt(Phone),
-        });
+        })
+
+        signInWithEmailAndPassword(auth, Email, Password)
+            .then(() => {
+                console.log('logado!')
+            })
     }
 
     return (
@@ -294,7 +302,7 @@ const SignIn = ({ navigation, route }) => {
                                         if (Name != '' && Phone != '') {
                                             newUser();
                                             setVisibleNewData(false);
-                                            navigation.navigate('Home');
+                                            navigation.navigate('Home', { UID: uid });
                                         }
                                     }
                                 }} />

@@ -35,8 +35,8 @@ export default function App() {
             <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
             <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
             <Stack.Screen name="AboutUs" component={AboutUs} options={{ title: 'Sobre Nós', headerBackTitle: 'Voltar' }} />
-            <Stack.Screen name="Schedule" component={Schedule} options={{ title: 'Agendar', headerBackTitle: 'Voltar' }} />
-            <Stack.Screen name="Scheduling" component={Scheduling} options={{ title: 'Marcações', headerBackTitle: 'Voltar' }} />
+            <Stack.Screen name="Schedule" component={Schedule} options={{ title: 'Marcações', headerBackTitle: 'Voltar' }} />
+            <Stack.Screen name="Scheduling" component={Scheduling} options={{ title: 'Agendar', headerBackTitle: 'Voltar' }} />
             <Stack.Screen name="Services" component={Services} options={{ title: 'Serviços', headerBackTitle: 'Voltar' }} />
             {/* <Stack.Screen name="CostumersList" component={AboutUs} options={{ title: 'Clientes', headerBackTitle: 'Voltar' }} /> */}
             <Stack.Screen name="Profile" component={Profile} options={{ title: 'Perfil', headerBackTitle: 'Voltar' }} />
