@@ -119,7 +119,7 @@ export default function Services({ navigation }) {
 
             </ScrollView>
             <View style={styles.btnSchedule}>
-                <Button title='Quero Fazer um Agendamento' color='#fff' onPress={() => navigation.navigate('Scheduling')} />
+                <Button title='Quero Fazer um Agendamento' color='#fff' onPress={() => navigation.navigate('ScheServices')} />
             </View>
         </Layout>
     );

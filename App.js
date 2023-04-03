@@ -16,6 +16,7 @@ import SignIn from './src/pages/SignIn';
 import HomeScreen from './src/pages/Home';
 import AboutUs from './src/pages/AboutUs';
 import Schedule from './src/pages/Schedule';
+import ScheServices from './src/pages/ScheServices';
 import Scheduling from './src/pages/Scheduling';
 import Services from './src/pages/Services';
 // import {} from './src/pages/CostumersList';
@@ -36,6 +37,7 @@ export default function App() {
             <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
             <Stack.Screen name="AboutUs" component={AboutUs} options={{ title: 'Sobre Nós', headerBackTitle: 'Voltar' }} />
             <Stack.Screen name="Schedule" component={Schedule} options={{ title: 'Marcações', headerBackTitle: 'Voltar' }} />
+            <Stack.Screen name="ScheServices" component={ScheServices} options={{ title: 'Agendar', headerBackTitle: 'Voltar' }} />
             <Stack.Screen name="Scheduling" component={Scheduling} options={{ title: 'Agendar', headerBackTitle: 'Voltar' }} />
             <Stack.Screen name="Services" component={Services} options={{ title: 'Serviços', headerBackTitle: 'Voltar' }} />
             {/* <Stack.Screen name="CostumersList" component={AboutUs} options={{ title: 'Clientes', headerBackTitle: 'Voltar' }} /> */}

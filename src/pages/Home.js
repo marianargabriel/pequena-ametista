@@ -17,12 +17,11 @@ import { db } from '../firebaseConnection';
 import LogIn from './LogIn';
 import Landing from './Landing';
 import Schedule from './Schedule';
-import Scheduling from './Scheduling';
+import ScheServices from './ScheServices';
 import AboutUs from './AboutUs';
 import Profile from './Profile';
 import CostumersList from './CostumersList';
 import Contact from './Contact';
-import { async } from '@firebase/util';
 
 const { width } = Dimensions.get('window');
 
@@ -44,13 +43,13 @@ const HomeScreen = ({ navigation, route }) => {
                 options={{
                     headerShown: false
                 }} />
-            <Tab.Screen name="Agendar" component={Scheduling}
+            <Tab.Screen name="Agendar" component={ScheServices}
                 initialParams={{ UID: route.params.UID }}/>
 
             <Tab.Screen name="Marcações" component={Schedule}
                 initialParams={{ UID: route.params.UID }}/>
 
-            <Tab.Screen name="Perfil" component={Profile}
+            <Tab.Screen name="Perfil" component={CostumersList}
                 initialParams={{ UID: route.params.UID }}/>
         </Tab.Navigator>
     )
@@ -88,7 +87,7 @@ const Home = ({ navigation, route }) => {
 
     return (
         <Layout style={{ flex: 1, paddingRight: '5%', paddingLeft: '5%', paddingTop: '15%' }}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false} >
                 <View>
                     <Text style={{ fontSize: '20', fontWeight: '300' }}>Olá!</Text>
                     <Text style={{ fontSize: '24', fontWeight: '500' }}>{userData.nome != undefined ? userData.nome : 'Loading...'}</Text>
@@ -104,7 +103,7 @@ const Home = ({ navigation, route }) => {
                     <Text style={styles.titles}>Próximas Marcações</Text>
                     <View style={styles.scheduleContent}>
                         <View style={styles.contextLeft}>
-                            <Text style={{ fontWeight: '300' }}>09/02/2023</Text>
+                            <Text style={{ fontWeight: '300' }}>09/05/2023</Text>
                         </View>
                         <View style={styles.verticleLine}></View>
                         <View style={styles.contextCenter}>
@@ -116,7 +115,7 @@ const Home = ({ navigation, route }) => {
                     </View>
                     <View style={styles.scheduleContent}>
                         <View style={styles.contextLeft}>
-                            <Text style={{ fontWeight: '300' }}>09/02/2023</Text>
+                            <Text style={{ fontWeight: '300' }}>10/05/2023</Text>
                         </View>
                         <View style={styles.verticleLine}></View>
                         <View style={styles.contextCenter}>
@@ -146,7 +145,7 @@ const Home = ({ navigation, route }) => {
                                 shadowRadius,
                             },
                         ]}>
-                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/nailsCard.png?alt=media&token=7eecf317-9927-4655-954f-2fe25334becf' }} />
+                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/nailsCard.png?alt=media&token=7eecf317-9927-4655-954f-2fe25334becf' }} />
                             <Text style={styles.servicesText}> Unhas </Text>
                         </Card>
 
@@ -162,7 +161,7 @@ const Home = ({ navigation, route }) => {
                                 shadowRadius,
                             },
                         ]}>
-                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/epilationCard.png?alt=media&token=b11e4835-c108-4445-a643-b85307a2708e' }} />
+                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/epilationCard.png?alt=media&token=b11e4835-c108-4445-a643-b85307a2708e' }} />
                             <Text style={styles.servicesText}> Epilação </Text>
                         </Card>
 
@@ -178,7 +177,7 @@ const Home = ({ navigation, route }) => {
                                 shadowRadius,
                             },
                         ]}>
-                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/threadingCard.png?alt=media&token=0f5603f2-267e-421a-9b38-7407c261e03c' }} />
+                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/threadingCard.png?alt=media&token=0f5603f2-267e-421a-9b38-7407c261e03c' }} />
                             <Text style={styles.servicesText}> Threading </Text>
                         </Card>
 
@@ -194,7 +193,7 @@ const Home = ({ navigation, route }) => {
                                 shadowRadius,
                             },
                         ]}>
-                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 10 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/eyelashesCard.png?alt=media&token=ec101fdb-6035-493f-ba42-5cf79a6b508e' }} />
+                            <Image style={{ width: 111, height: 122, marginTop: -17, borderRadius: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/pequena-ametista-pap.appspot.com/o/eyelashesCard.png?alt=media&token=ec101fdb-6035-493f-ba42-5cf79a6b508e' }} />
                             <Text style={styles.servicesText}> Pestanas </Text>
                         </Card>
                     </View>
@@ -259,6 +258,10 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
     },
 
+    // contextCenter: {
+    //     flexDirection: "row",
+    // },
+
     verticleLine: {
         height: '100%',
         width: 1,
@@ -281,7 +284,7 @@ const styles = StyleSheet.create({
     servicesCard: {
         width: 111,
         height: 159,
-        borderRadius: 10,
+        borderRadius: 12,
         alignItems: 'center',
         textAlign: 'center',
         shadowColor: 'black',

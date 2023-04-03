@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native'; 
-import { Layout, List, ListItem, Text, Input } from '@ui-kitten/components';
+import { StyleSheet } from 'react-native';
+import { List, ListItem, Divider, Icon, Button } from '@ui-kitten/components';
 import { db } from "../firebaseConnection";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, getDocs } from "firebase/firestore";
 
 function CostumersList() {
     const [dados, setdados] = useState([])
@@ -15,7 +15,6 @@ function CostumersList() {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(
             (user) => {
-                // console.log(user.id, " => ", user.data());
                 Dados.push({
                     nome: user.data().nome,
                     telemovel: user.data().numero,
@@ -32,28 +31,38 @@ function CostumersList() {
         })
     }, [])
 
+    const renderItemAccessory = (props) => (
+        <Button size='tiny' style={styles.btnDelete}>Eliminar</Button>
+    );
+
+    const renderItemIcon = (props) => (
+        <Icon {...props} name='person-outline' />
+    );
 
     const renderItem = ({ item, index }) => (
         <ListItem
-            title={`${item.nome} ${index + 1}`}
-            description={`${item.telemovel} ${index + 1}`}
+            title={`${item.nome}`}
+            description={`${"Tel."} ${item.telemovel}`}
+            accessoryLeft={renderItemIcon}
+            accessoryRight={renderItemAccessory}
         />
     );
 
     return (
-        <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <List
-                style={styles.container}
-                data={dados}
-                renderItem={renderItem}
-            />
-        </Layout>
+        <List
+            style={styles.container}
+            data={dados}
+            ItemSeparatorComponent={Divider}
+            renderItem={renderItem}
+        />
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        maxHeight: 192,
+
+    btnDelete: {
+        backgroundColor: '#b80424',
+        borderColor: '#b80424',
     },
 });
 
