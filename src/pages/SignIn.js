@@ -14,8 +14,6 @@ import styles from "../styles";
 
 const { width } = Dimensions.get('window');
 
-
-
 const SignIn = ({ navigation, route }) => {
     const params = route.params
     const [Email, setEmail] = React.useState('');
@@ -70,9 +68,6 @@ const SignIn = ({ navigation, route }) => {
     }, []);
 
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
-
-
 
     async function newUser() {
         console.log(uid);
@@ -179,7 +174,7 @@ const SignIn = ({ navigation, route }) => {
                                     fill='red'
                                     name='alert-triangle-outline'
                                 />
-                                <Text style={{ marginBottom: 20, fontWeight: '400', }}>Erro</Text>
+                                <Text style={{ marginBottom: 20, fontWeight: '500', }}>Erro</Text>
                             </View>
                             <Text style={{ fontWeight: '300' }}>Este endereço de email já está a ser utilizado. Tente recuperar a palavra-passe.</Text>
                             <View style={styles.btnAgain} >
@@ -200,7 +195,7 @@ const SignIn = ({ navigation, route }) => {
                                     fill='red'
                                     name='alert-triangle-outline'
                                 />
-                                <Text style={{ marginBottom: 20, fontWeight: '400', }}>Erro</Text>
+                                <Text style={{ marginBottom: 20, fontWeight: '500', }}>Erro</Text>
                             </View>
                             <Text style={{ fontWeight: '300' }}>Insira um endereço de email válido.</Text>
                             <View style={styles.btnAgain} >
@@ -221,7 +216,7 @@ const SignIn = ({ navigation, route }) => {
                                     fill='red'
                                     name='alert-triangle-outline'
                                 />
-                                <Text style={{ marginBottom: 20, fontWeight: '400', }}>Erro</Text>
+                                <Text style={{ marginBottom: 20, fontWeight: '500', }}>Erro</Text>
                             </View>
                             <Text style={{ fontWeight: '300' }}>Insira uma palavra-passe e confirme-a.</Text>
                             <View style={styles.btnAgain} >
@@ -242,7 +237,7 @@ const SignIn = ({ navigation, route }) => {
                                     fill='red'
                                     name='alert-triangle-outline'
                                 />
-                                <Text style={{ marginBottom: 20, fontWeight: '400', }}>Erro</Text>
+                                <Text style={{ marginBottom: 20, fontWeight: '500', }}>Erro</Text>
                             </View>
                             <Text style={{ fontWeight: '300' }}>A palavra-passe é muito fraca. Crie uma palavra-passe com no mínimo 6 caracteres.</Text>
                             <View style={styles.btnAgain} >
@@ -263,7 +258,7 @@ const SignIn = ({ navigation, route }) => {
                                     fill='red'
                                     name='alert-triangle-outline'
                                 />
-                                <Text style={{ marginBottom: 20, fontWeight: '400', }}>Erro</Text>
+                                <Text style={{ marginBottom: 20, fontWeight: '500', }}>Erro</Text>
                             </View>
                             <Text style={{ fontWeight: '300' }}>As palavra-passes que inseriu não coincidem.</Text>
                             <View style={styles.btnAgain} >

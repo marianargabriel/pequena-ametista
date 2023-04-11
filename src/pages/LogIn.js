@@ -120,6 +120,7 @@ const LogIn = ({ navigation, route }) => {
               <Text style={{ fontWeight: '300' }} >Ainda não tem conta?</Text><Text style={{ color: '#8288C3', fontWeight: '300' }} onPress={() => navigation.navigate('SignIn')}> Criar</Text>
             </View>
 
+            {/* agendamento pendente */}
             <Modal
               visible={visibleErr}
               backdropStyle={styles.backdrop}
@@ -131,9 +132,9 @@ const LogIn = ({ navigation, route }) => {
                     fill='red'
                     name='alert-triangle-outline'
                   />
-                  <Text style={{ marginBottom: 20, fontWeight: '400' }}>Alerta!</Text>
+                  <Text style={{ marginBottom: 20, fontWeight: '500' }}>Alerta!</Text>
                 </View>
-                <Text> Palavra-passe ou endereço de email incorretos.</Text>
+                <Text style={{ fontWeight: '300' }}> Palavra-passe ou endereço de email incorretos.</Text>
                 <View style={styles.btnAgain}>
                   <Button title='Tentar Novamente' color='#fff' onPress={() => setVisibleErr(false)} />
                 </View>

@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginTop: '10%',
     marginLeft: '10%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
 

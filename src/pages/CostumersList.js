@@ -27,12 +27,11 @@ function CostumersList() {
     useEffect(() => {
         getDados().then((dadosReturn) => {
             setdados(dadosReturn)
-            console.log(dadosReturn)
         })
     }, [])
 
     const renderItemAccessory = (props) => (
-        <Button size='tiny' style={styles.btnDelete}>Eliminar</Button>
+        <Button size='tiny' style={styles.btnDelete}>Ligar</Button>
     );
 
     const renderItemIcon = (props) => (
@@ -42,7 +41,7 @@ function CostumersList() {
     const renderItem = ({ item, index }) => (
         <ListItem
             title={`${item.nome}`}
-            description={`${"Tel."} ${item.telemovel}`}
+            description={`${"Telf."} ${item.telemovel}`}
             accessoryLeft={renderItemIcon}
             accessoryRight={renderItemAccessory}
         />
@@ -59,11 +58,6 @@ function CostumersList() {
 }
 
 const styles = StyleSheet.create({
-
-    btnDelete: {
-        backgroundColor: '#b80424',
-        borderColor: '#b80424',
-    },
 });
 
 export default CostumersList;

@@ -44,13 +44,13 @@ const HomeScreen = ({ navigation, route }) => {
                     headerShown: false
                 }} />
             <Tab.Screen name="Agendar" component={ScheServices}
-                initialParams={{ UID: route.params.UID }}/>
+                initialParams={{ UID: route.params.UID }} />
 
             <Tab.Screen name="Marcações" component={Schedule}
-                initialParams={{ UID: route.params.UID }}/>
+                initialParams={{ UID: route.params.UID }} />
 
-            <Tab.Screen name="Perfil" component={CostumersList}
-                initialParams={{ UID: route.params.UID }}/>
+            <Tab.Screen name="Perfil" component={Profile}
+                initialParams={{ UID: route.params.UID }} />
         </Tab.Navigator>
     )
 };

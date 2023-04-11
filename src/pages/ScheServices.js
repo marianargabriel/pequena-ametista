@@ -10,7 +10,8 @@ const useCheckboxState = (initialCheck = false) => {
     return { checked, onChange: setChecked };
 };
 
-export default function ScheServices({ navigation }) {
+export default function ScheServices({ navigation, route }) {
+    const params = route.params
 
     // Epilação
     const epAbdomen = useCheckboxState();
@@ -394,7 +395,7 @@ export default function ScheServices({ navigation }) {
                 </View>
             </ScrollView>
             <View style={styles.btnOK}>
-                <Button title='Continuar' color='#fff' onPress={() => navigation.navigate('Scheduling')} />
+                <Button title='Continuar' color='#fff' onPress={() => navigation.navigate('Scheduling', {UID: params.UID})} />
             </View>
         </Layout>
     );
