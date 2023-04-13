@@ -34,7 +34,8 @@ export default function App() {
             <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
             <Stack.Screen name="LogIn" component={LogIn} options={{ headerShown: false }} />
             <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
-            <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+            {/* <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false, gestureEnabled: false, }} /> meter quando tiver botao de logout*/} 
+            <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false,}} />
             <Stack.Screen name="AboutUs" component={AboutUs} options={{ title: 'Sobre Nós', headerBackTitle: 'Voltar' }} />
             <Stack.Screen name="Schedule" component={Schedule} options={{ title: 'Marcações', headerBackTitle: 'Voltar' }} />
             <Stack.Screen name="ScheServices" component={ScheServices} options={{ title: 'Agendar', headerBackTitle: 'Voltar' }} />
