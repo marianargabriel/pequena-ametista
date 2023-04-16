@@ -22,6 +22,7 @@ import AboutUs from './AboutUs';
 import Profile from './Profile';
 import CostumersList from './CostumersList';
 import Contact from './Contact';
+import HomeAdmin from './HomeAdmin';
 
 const { width } = Dimensions.get('window');
 
@@ -38,7 +39,7 @@ const HomeScreen = ({ navigation, route }) => {
                     headerShown: false
                 }} />
 
-            <Tab.Screen name="Contacto" component={Contact}
+            <Tab.Screen name="Contacto" component={HomeAdmin}
                 initialParams={{ UID: route.params.UID }}
                 options={{
                     headerShown: false

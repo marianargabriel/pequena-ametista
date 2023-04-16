@@ -30,10 +30,6 @@ function CostumersList() {
         })
     }, [])
 
-    const renderItemAccessory = (props) => (
-        <Button size='tiny' style={styles.btnDelete}>Ligar</Button>
-    );
-
     const renderItemIcon = (props) => (
         <Icon {...props} name='person-outline' />
     );
@@ -43,7 +39,6 @@ function CostumersList() {
             title={`${item.nome}`}
             description={`${"Telf."} ${item.telemovel}`}
             accessoryLeft={renderItemIcon}
-            accessoryRight={renderItemAccessory}
         />
     );
 
