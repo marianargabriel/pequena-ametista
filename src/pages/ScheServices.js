@@ -12,51 +12,50 @@ const useCheckboxState = (initialCheck = false) => {
 
 export default function ScheServices({ navigation, route }) {
     const params = route.params
-
     // Epilação
-    const epAbdomen = useCheckboxState();
-    const epAxilas = useCheckboxState();
-    const epBracos = useCheckboxState();
-    const epBuco = useCheckboxState();
-    const epCostas = useCheckboxState();
-    const epCoxa = useCheckboxState();
-    const epGluteos = useCheckboxState();
-    const epLinhaalba = useCheckboxState();
-    const epLombar = useCheckboxState();
-    const epMeiaperna = useCheckboxState();
-    const epMeiobraco = useCheckboxState();
-    const epOmbros = useCheckboxState();
-    const epPeito = useCheckboxState();
-    const epPerna = useCheckboxState();
-    const epQueixo = useCheckboxState();
-    const epRosto = useCheckboxState();
-    const epSobrancelhas = useCheckboxState();
-    const epVirilhacav = useCheckboxState();
-    const epVirilhacomp = useCheckboxState();
+    const epAbdomen = useCheckboxState();//0
+    const epAxilas = useCheckboxState();//1
+    const epBracos = useCheckboxState();//2
+    const epBuco = useCheckboxState();//3
+    const epCostas = useCheckboxState();//4
+    const epCoxa = useCheckboxState();//5
+    const epGluteos = useCheckboxState();//6
+    const epLinhaalba = useCheckboxState();//7
+    const epLombar = useCheckboxState();//8
+    const epMeiaperna = useCheckboxState();//9
+    const epMeiobraco = useCheckboxState();//10
+    const epOmbros = useCheckboxState();//11
+    const epPeito = useCheckboxState();//12
+    const epPerna = useCheckboxState();//13
+    const epQueixo = useCheckboxState();//14
+    const epRosto = useCheckboxState();//15
+    const epSobrancelhas = useCheckboxState();//16
+    const epVirilhacav = useCheckboxState();//17
+    const epVirilhacomp = useCheckboxState();//18
 
     // Manicure
-    const aplUnhasgel = useCheckboxState();
-    const aplVernizgel = useCheckboxState();
-    const manuUnhasgel = useCheckboxState();
-    const manuVernizgel = useCheckboxState();
-    const repUnha = useCheckboxState();
+    const aplUnhasgel = useCheckboxState();//19
+    const aplVernizgel = useCheckboxState();//20
+    const manuUnhasgel = useCheckboxState();//21
+    const manuVernizgel = useCheckboxState();//22
+    const repUnha = useCheckboxState();//23
 
     // Pestanas e Sobrancelhas
-    const aplExtpestanas = useCheckboxState();
-    const liftingPestanas = useCheckboxState();
-    const manuExtpestanas = useCheckboxState();
-    const permSobrancelhas = useCheckboxState();
-    const pintPestanas = useCheckboxState();
+    const aplExtpestanas = useCheckboxState();//24
+    const liftingPestanas = useCheckboxState();//25
+    const manuExtpestanas = useCheckboxState();//26
+    const permSobrancelhas = useCheckboxState();//27
+    const pintPestanas = useCheckboxState();//28
 
     // Threading
-    const thBuco = useCheckboxState();
-    const thLinhaalba = useCheckboxState();
-    const thMacasrosto = useCheckboxState();
-    const thNariz = useCheckboxState();
-    const thOrelhas = useCheckboxState();
-    const thQueixo = useCheckboxState();
-    const thRosto = useCheckboxState();
-    const thSobrancelhas = useCheckboxState();
+    const thBuco = useCheckboxState();//29
+    const thLinhaalba = useCheckboxState();//30
+    const thMacasrosto = useCheckboxState();//31
+    const thNariz = useCheckboxState();//32
+    const thOrelhas = useCheckboxState();//33
+    const thQueixo = useCheckboxState();//34
+    const thRosto = useCheckboxState();//35
+    const thSobrancelhas = useCheckboxState();//36
 
     const [showElement, setShowElement] = useState(false)
     const [showElement2, setShowElement2] = useState(false)
@@ -80,6 +79,162 @@ export default function ScheServices({ navigation, route }) {
                 setShowElement4(!showElement4)
                 break;
         }
+    }
+
+    let servicosArr = [];
+    function servicos() {
+        if (epAbdomen.checked) {
+            if (!servicosArr.includes(0)) {
+                servicosArr = servicosArr.concat(0)
+            }
+        } if (epAxilas.checked) {
+            if (!servicosArr.includes(1)) {
+                servicosArr = servicosArr.concat(1)
+            }
+        } if (epBracos.checked) {
+            if (!servicosArr.includes(2)) {
+                servicosArr = servicosArr.concat(2)
+            }
+        } if (epBuco.checked) {
+            if (!servicosArr.includes(3)) {
+                servicosArr = servicosArr.concat(3)
+            }
+        } if (epCostas.checked) {
+            if (!servicosArr.includes(4)) {
+                servicosArr = servicosArr.concat(4)
+            }
+        } if (epCoxa.checked) {
+            if (!servicosArr.includes(5)) {
+                servicosArr = servicosArr.concat(5)
+            }
+        } if (epGluteos.checked) {
+            if (!servicosArr.includes(6)) {
+                servicosArr = servicosArr.concat(6)
+            }
+        } if (epLinhaalba.checked) {
+            if (!servicosArr.includes(7)) {
+                servicosArr = servicosArr.concat(7)
+            }
+        } if (epLombar.checked) {
+            if (!servicosArr.includes(8)) {
+                servicosArr = servicosArr.concat(8)
+            }
+        } if (epMeiaperna.checked) {
+            if (!servicosArr.includes(9)) {
+                servicosArr = servicosArr.concat(9)
+            }
+        } if (epMeiobraco.checked) {
+            if (!servicosArr.includes(10)) {
+                servicosArr = servicosArr.concat(10)
+            }
+        } if (epOmbros.checked) {
+            if (!servicosArr.includes(11)) {
+                servicosArr = servicosArr.concat(11)
+            }
+        } if (epPeito.checked) {
+            if (!servicosArr.includes(12)) {
+                servicosArr = servicosArr.concat(12)
+            }
+        } if (epPerna.checked) {
+            if (!servicosArr.includes(13)) {
+                servicosArr = servicosArr.concat(13)
+            }
+        } if (epQueixo.checked) {
+            if (!servicosArr.includes(14)) {
+                servicosArr = servicosArr.concat(14)
+            }
+        } if (epRosto.checked) {
+            if (!servicosArr.includes(15)) {
+                servicosArr = servicosArr.concat(15)
+            }
+        } if (epSobrancelhas.checked) {
+            if (!servicosArr.includes(16)) {
+                servicosArr = servicosArr.concat(16)
+            }
+        } if (epVirilhacav.checked) {
+            if (!servicosArr.includes(17)) {
+                servicosArr = servicosArr.concat(17)
+            }
+        } if (epVirilhacomp.checked) {
+            if (!servicosArr.includes(18)) {
+                servicosArr = servicosArr.concat(18)
+            }
+        } if (aplUnhasgel.checked) {
+            if (!servicosArr.includes(19)) {
+                servicosArr = servicosArr.concat(19)
+            }
+        } if (aplVernizgel.checked) {
+            if (!servicosArr.includes(20)) {
+                servicosArr = servicosArr.concat(20)
+            }
+        } if (manuUnhasgel.checked) {
+            if (!servicosArr.includes(21)) {
+                servicosArr = servicosArr.concat(21)
+            }
+        } if (manuVernizgel.checked) {
+            if (!servicosArr.includes(22)) {
+                servicosArr = servicosArr.concat(22)
+            }
+        } if (repUnha.checked) {
+            if (!servicosArr.includes(23)) {
+                servicosArr = servicosArr.concat(23)
+            }
+        } if (aplExtpestanas.checked) {
+            if (!servicosArr.includes(24)) {
+                servicosArr = servicosArr.concat(24)
+            }
+        } if (liftingPestanas.checked) {
+            if (!servicosArr.includes(25)) {
+                servicosArr = servicosArr.concat(25)
+            }
+        } if (manuExtpestanas.checked) {
+            if (!servicosArr.includes(26)) {
+                servicosArr = servicosArr.concat(26)
+            }
+        } if (permSobrancelhas.checked) {
+            if (!servicosArr.includes(27)) {
+                servicosArr = servicosArr.concat(27)
+            }
+        } if (pintPestanas.checked) {
+            if (!servicosArr.includes(28)) {
+                servicosArr = servicosArr.concat(28)
+            }
+        } if (thBuco.checked) {
+            if (!servicosArr.includes(29)) {
+                servicosArr = servicosArr.concat(29)
+            }
+        } if (thLinhaalba.checked) {
+            if (!servicosArr.includes(30)) {
+                servicosArr = servicosArr.concat(30)
+            }
+        } if (thMacasrosto.checked) {
+            if (!servicosArr.includes(31)) {
+                servicosArr = servicosArr.concat(31)
+            }
+        } if (thNariz.checked) {
+            if (!servicosArr.includes(32)) {
+                servicosArr = servicosArr.concat(32)
+            }
+        } if (thOrelhas.checked) {
+            if (!servicosArr.includes(33)) {
+                servicosArr = servicosArr.concat(33)
+            }
+        } if (thQueixo.checked) {
+            if (!servicosArr.includes(34)) {
+                servicosArr = servicosArr.concat(34)
+            }
+        } if (thRosto.checked) {
+            if (!servicosArr.includes(35)) {
+                servicosArr = servicosArr.concat(35)
+            }
+        } if (thSobrancelhas.checked) {
+            if (!servicosArr.includes(36)) {
+                servicosArr = servicosArr.concat(36)
+            }
+        }
+        
+        console.log(servicosArr)
+        navigation.navigate('Scheduling', { UID: params.UID, SERV: servicosArr })
     }
 
     return (
@@ -395,7 +550,8 @@ export default function ScheServices({ navigation, route }) {
                 </View>
             </ScrollView>
             <View style={styles.btnOK}>
-                <Button title='Continuar' color='#fff' onPress={() => navigation.navigate('Scheduling', {UID: params.UID})} />
+                <Button title='Continuar' color='#fff' onPress={() => servicos()} />
+                {/* <Button title='Continuar' color='#fff' onPress={() => navigation.navigate('Scheduling', {UID: params.UID})} /> */}
             </View>
         </Layout>
     );
