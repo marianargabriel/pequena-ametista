@@ -13,15 +13,34 @@ const { width } = Dimensions.get('window');
 
 const HomeAdmin = ({ navigation, route }) => {
     const params = route.params
-    const [Name, setName] = React.useState('');
-    const [Phone, setPhone] = React.useState('');
 
+    let userDatas = [];
     const [userData, setUserData] = useState([]);
+    const [load, setLoad] = useState(false);
+    let ok = false;
 
     const [aprovSchedule, setaprovSchedule] = React.useState(false);
 
-    async function getUserData() {
-        console.log(params.UID)
+    const [agendaData, setAgendaData] = useState([]);
+    const [agendaPendentesData, setAgendaPendentesData] = useState([]);
+    const [finalUserData, setFinalUserData] = useState([]);
+
+    async function getUser(UID) {
+        const userRef = doc(db, "users", UID);
+        const user = await getDoc(userRef);
+
+        if (user.exists()) {
+            console.log("User nome serviço:", user.data().nome);
+
+            console.log(userDatas.concat(user.data().nome))
+            userDatas = userDatas.concat(user.data().nome)
+            setFinalUserData(userDatas)
+        } else {
+            console.log("No such document!");
+        }
+    }
+
+    async function getData() {
         const userRef = doc(db, "users", params.UID);
         const user = await getDoc(userRef);
 
@@ -29,121 +48,172 @@ const HomeAdmin = ({ navigation, route }) => {
             console.log("User nome:", user.data().nome);
             setUserData(user.data())
         } else {
-            // doc.data() will be undefined in this case
             console.log("No such document!");
         }
+
+        const agendaRef = doc(db, "schedules", "agenda");
+        const agenda = await getDoc(agendaRef);
+        let dataAgendas = [];
+        let dataPendentes = [];
+
+        if (agenda.exists()) {
+            console.log("Agenda:", agenda.data().agenda);
+            const agendaTemp = agenda.data().agenda
+
+            agendaTemp.map(({ UID, aprovado, data, servicos }, index) => {
+                const dataHora = new Date(
+                    data.seconds * 1000 + data.nanoseconds / 1000000,
+                );
+                try {
+                    getUser(UID);
+                } catch (error) {
+                    console.log(error)
+                }
+
+                if (aprovado) {
+                    dataAgendas.push({
+                        userIndex: index,
+                        data: dataHora.toLocaleDateString(),
+                        hora: dataHora.toLocaleTimeString().slice(0, 5),
+                        servicos: servicos.join(', '),
+                    })
+                } else {
+                    dataPendentes.push({
+                        userIndex: index,
+                        data: dataHora.toLocaleDateString(),
+                        hora: dataHora.toLocaleTimeString().slice(0, 5),
+                        servicos: servicos.join(', '),
+                    })
+                }
+            })
+        } else {
+            console.log("No such document!");
+        }
+        setAgendaData(dataAgendas)
+        setAgendaPendentesData(dataPendentes)
     }
 
     useEffect(() => {
-        getUserData();
+        try {
+            getData().then(() => {
+
+                setLoad(true);
+            });
+        } catch (error) {
+            console.log(error)
+        }
     }, [])
 
-    const [shadowOffsetWidth, setShadowOffsetWidth] = useState(4);
-    const [shadowOffsetHeight, setShadowOffsetHeight] = useState(4);
-    const [shadowRadius, setShadowRadius] = useState(5);
-    const [shadowOpacity, setShadowOpacity] = useState(0.35);
+    const [infoClick, setInfoClick] = useState(0);// tipo
+    const [infoClickMarcacoes, setInfoClickMarcacoes] = useState(0);
+    const [infoClickUser, setInfoClickUser] = useState(0);
+    const [infoClickPendentes, setInfoClickPendentes] = useState(0);
 
-    return (
-        <Layout style={{ flex: 1, paddingRight: '5%', paddingLeft: '5%', paddingTop: '15%' }}>
-            <ScrollView showsVerticalScrollIndicator={false} >
-                <View>
-                    <Text style={{ fontSize: '20', fontWeight: '300' }}>Olá!</Text>
-                    <Text style={{ fontSize: '24', fontWeight: '500' }}>{userData.nome != undefined ? userData.nome : 'Loading...'}</Text>
+    let dadosPendentes = [
+        { nome: 'Guilherme', data: '19/05/2023', hora: '10:00', servicos: ['Axila', 'Peito'] },
+        { nome: 'Mariana', data: '20/05/2023', hora: '13:00', servicos: ['Unha'] },
+    ]
 
-                    <Text style={styles.titles}>Marcações de Hoje</Text>
-                    <View style={styles.scheduleContent}>
-                        <View style={styles.contextLeft}>
-                            <Text style={{ fontWeight: '300' }}>09/05/2023</Text>
-                        </View>
-                        <View style={styles.verticleLine}></View>
-                        <View style={styles.contextCenter}>
-                            <Text style={{ fontWeight: '300' }}>10:25</Text>
-                        </View>
-                        <View style={styles.contextRight}>
-                            <Text style={styles.details} onPress={() => navigation.navigate('SchedulesAdmin')} >Ver Detalhes</Text>
-                        </View>
+
+    if (load) {
+        return (
+            <Layout style={{ flex: 1, paddingRight: '5%', paddingLeft: '5%', paddingTop: '15%' }}>
+                <ScrollView showsVerticalScrollIndicator={false} >
+                    <View>
+                        <Text style={{ fontSize: '20', fontWeight: '300' }}>Olá!</Text>
+                        <Text style={{ fontSize: '24', fontWeight: '500' }}>{userData.nome != undefined ? userData.nome : 'Loading...'}</Text>
+
+                        <Text style={styles.titles}>Marcações</Text>
+                        {agendaData.map((cliente, index) => {
+                            return (
+                                <View style={styles.scheduleContent}>
+                                    <View style={styles.contextLeft}>
+                                        <Text style={{ fontWeight: '300' }}>{cliente.data}</Text>
+                                    </View>
+                                    <View style={styles.verticleLine}></View>
+                                    <View style={styles.contextCenter}>
+                                        <Text style={{ fontWeight: '300' }}>{cliente.hora}</Text>
+                                    </View>
+                                    <View style={styles.contextRight}>
+                                        <Text style={styles.details} onPress={() => {
+                                            setInfoClick(0);
+                                            setInfoClickMarcacoes(index);
+                                            setInfoClickUser(cliente.userIndex);
+                                            setaprovSchedule(true);
+                                        }} >Ver Detalhes</Text>
+                                    </View>
+                                </View>
+                            )
+                        })}
+
+                        <Text style={styles.titles}>Agendamentos Pendentes</Text>
+                        {agendaPendentesData.map((cliente, index) => {
+                            return (
+                                <View style={styles.scheduleContent}>
+                                    <View style={styles.contextLeft}>
+                                        <Text style={{ fontWeight: '300' }}>{cliente.data}</Text>
+                                    </View>
+                                    <View style={styles.verticleLine}></View>
+                                    <View style={styles.contextCenter}>
+                                        <Text style={{ fontWeight: '300' }}>{cliente.hora}</Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.contextRight} onPress={() => {
+                                        setInfoClick(1)
+                                        setInfoClickUser(cliente.userIndex);
+                                        setInfoClickPendentes(index);
+                                        setaprovSchedule(true)
+                                    }}>
+                                        <Text style={styles.aprov} >Aprovar</Text>
+                                        <Icon
+                                            style={styles.iconAprov}
+                                            fill='#242961'
+                                            name='checkmark-circle-outline'
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            )
+                        })}
                     </View>
-                    <View style={styles.scheduleContent}>
-                        <View style={styles.contextLeft}>
-                            <Text style={{ fontWeight: '300' }}>10/05/2023</Text>
-                        </View>
-                        <View style={styles.verticleLine}></View>
-                        <View style={styles.contextCenter}>
-                            <Text style={{ fontWeight: '300' }}>10:25</Text>
-                        </View>
-                        <View style={styles.contextRight}>
-                            <Text style={styles.details} onPress={() => navigation.navigate('SchedulesAdmin')} >Ver Detalhes</Text>
-                        </View>
-                    </View>
+                </ScrollView>
 
-
-                    <Text style={styles.titles}>Agendamentos Pendentes</Text>
-                    <View style={styles.scheduleContent}>
-                        <View style={styles.contextLeft}>
-                            <Text style={{ fontWeight: '300' }}>09/05/2023</Text>
-                        </View>
-                        <View style={styles.verticleLine}></View>
-                        <View style={styles.contextCenter}>
-                            <Text style={{ fontWeight: '300' }}>10:25</Text>
-                        </View>
-                        <View style={styles.contextRight}>
-                            <Text style={styles.aprov} onPress={() => navigation.navigate('Scheduling')} >Aprovar</Text>
+                <Modal
+                    visible={aprovSchedule}
+                    style={{ minWidth: 330 }}
+                    backdropStyle={styles.backdrop}
+                    onBackdropPress={() => setaprovSchedule(false)}>
+                    <Card disabled={true} style={{ borderRadius: 15, }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                             <Icon
-                                style={styles.iconAprov}
-                                fill='#242961'
-                                name='checkmark-circle-outline'
-                                onPress={() => navigation.navigate('Scheduling')} />
+                                style={styles.warnicon}
+                                fill='#8288C3'
+                                name='refresh-outline'
+                            />
+                            <Text style={{ marginBottom: 20, fontWeight: '500' }}>{infoClick == 1 ? 'Deseja aprovar o agendamento?' : 'Dados de Marcação'}</Text>
                         </View>
-                    </View>
-                    <View style={styles.scheduleContent}>
-                        <View style={styles.contextLeft}>
-                            <Text style={{ fontWeight: '300' }}>10/05/2023</Text>
-                        </View>
-                        <View style={styles.verticleLine}></View>
-                        <View style={styles.contextCenter}>
-                            <Text style={{ fontWeight: '300' }}>10:25</Text>
-                        </View>
-                        <View style={styles.contextRight}>
-                            <Text style={styles.aprov} onPress={() => setaprovSchedule(true)} >Aprovar</Text>
-                            <Icon
-                                style={styles.iconAprov}
-                                fill='#242961'
-                                name='checkmark-circle-outline'
-                                onPress={() => setaprovSchedule(true)} />
-                        </View>
-                    </View>
-                </View>
-            </ScrollView>
+                        <Text style={{ textAlign: 'center', fontWeight: '300' }}>Data: {infoClick == 1 ? agendaPendentesData[infoClickPendentes].data : agendaData[infoClickMarcacoes].data}{'\n'}Hora: {infoClick == 1 ? agendaPendentesData[infoClickPendentes].hora : agendaData[infoClickMarcacoes].hora}{'\n'}Serviço: {infoClick == 1 ? agendaPendentesData[infoClickPendentes].servicos : agendaData[infoClickMarcacoes].servicos}{'\n'}Cliente: {infoClick == 1 ? finalUserData[infoClickUser] : finalUserData[infoClickUser]}{'\n'}</Text>
 
-            <Modal
-                visible={aprovSchedule}
-                backdropStyle={styles.backdrop}
-                onBackdropPress={() => setaprovSchedule(false)}>
-                <Card disabled={true} style={{ borderRadius: 15, }}>
-                    <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                        <Icon
-                            style={styles.warnicon}
-                            fill='#8288C3'
-                            name='refresh-outline'
-                        />
-                        <Text style={{ marginBottom: 20, fontWeight: '500' }}>Deseja aprovar o agendamento?</Text>
-                    </View>
-                    <Text style={{ textAlign: 'center', fontWeight: '300' }}>Data: {'\n'}Hora: {'\n'}Serviço: {'\n'}Cliente: {'\n'}</Text>
-                    <View style={styles.btnModal}>
-                        <Button title='Aprovar' color='#fff' onPress={() => {
-                            setaprovSchedule(false)
-                            navigation.push('Home', { UID: params.UID })
-                        }
-                        } />
-                    </View>
-                </Card>
-            </Modal>
-        </Layout>
-    );
+                        <View style={styles.btnOKModal}>
+                            <Button title={infoClick == 1 ? 'Aprovar' : 'OK'} color='#fff' onPress={() => {
+                                setaprovSchedule(false)
+                                // navigation.push('Home', { UID: params.UID })
+                            }
+                            } />
+                        </View>
+                        <View style={styles.btnCancelarModal}>
+                            <Button title='Cancelar' color='#fff' onPress={() => {
+                                setaprovSchedule(false)
+                                // navigation.push('Home', { UID: params.UID })
+                            }
+                            } />
+                        </View>
+                    </Card>
+                </Modal>
+            </Layout>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-
     titles: {
         fontSize: '22',
         fontWeight: '400',
@@ -195,15 +265,26 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
 
-    btnModal: {
+    btnOKModal: {
         backgroundColor: '#8288C3',
         height: 45,
-        width: '70%',
+        width: '80%',
         borderRadius: 10,
         marginTop: '10%',
-        marginLeft: '15%',
+        marginLeft: '10%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+    },
+
+    btnCancelarModal: {
+        backgroundColor: '#dc3545',
+        height: 45,
+        width: '80%',
+        borderRadius: 10,
+        marginTop: '2%',
+        marginLeft: '10%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     backdrop: {
