@@ -1,14 +1,14 @@
 import { StyleSheet, SafeAreaView } from 'react-native'
 import React from 'react'
-import { BottomNavigation,BottomNavigationTab, Icon } from '@ui-kitten/components';
+import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components';
 
 
 const HomeIcon = (props) => (
     <Icon {...props} name='home-outline' />
 );
 
-const ContactoIcon = (props) => (
-    <Icon {...props} name='phone-outline' />
+const ClientesIcon = (props) => (
+    <Icon {...props} name='people-outline' />
 );
 
 const AgendarIcon = (props) => (
@@ -28,20 +28,21 @@ const useBottomNavigationState = (initialState = 0) => {
     return { selectedIndex, onSelect: setSelectedIndex };
 };
 
-const BottomNavBar = ({ navigation, state, route}) => {
+const BottomNavBar = ({ navigation, state, route }) => {
     return (
         <SafeAreaView style={styles.btmNavBar}>
             <BottomNavigation style={styles.bottomNavigation}
                 selectedIndex={state.index}
-                onSelect = {index => navigation.navigate(state.routeNames[index])}>
+                onSelect={index => navigation.navigate(state.routeNames[index])}>
                 <BottomNavigationTab title='INÍCIO' icon={HomeIcon} />
-                <BottomNavigationTab title='CONTACTO' icon={ContactoIcon} />
-                <BottomNavigationTab title='AGENDAR' icon={AgendarIcon} />
                 <BottomNavigationTab title='MARCAÇÕES' icon={MarcacoesIcon} />
+                <BottomNavigationTab title='AGENDAR' icon={AgendarIcon} />
+                <BottomNavigationTab title='CLIENTES' icon={ClientesIcon} />
                 <BottomNavigationTab title='PERFIL' icon={PersonIcon} />
             </BottomNavigation>
         </SafeAreaView>
     )
+
 }
 
 export default BottomNavBar

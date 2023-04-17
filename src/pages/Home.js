@@ -7,6 +7,7 @@ import { Icon, Text, Layout, Card } from '@ui-kitten/components';
 
 // navbars
 import BottomNavBar from '../../components/BottomNavBar';
+import BottomNavBarAdmin from '../../components/BottomNavBar-Admin';
 import TopNavBar from "../../components/TopNavBar"
 
 // database
@@ -23,37 +24,66 @@ import Profile from './Profile';
 import CostumersList from './CostumersList';
 import Contact from './Contact';
 import HomeAdmin from './HomeAdmin';
+import SchedulesAdmin from './SchedulesAdmin';
 
 const { width } = Dimensions.get('window');
 
 const Tab = createBottomTabNavigator();
 
 const HomeScreen = ({ navigation, route }) => {
-    return (
-        <Tab.Navigator
-            tabBar={props => <BottomNavBar {...props} />}
-        >
-            <Tab.Screen name="Início" component={Home}
-                initialParams={{ UID: route.params.UID }}
-                options={{
-                    headerShown: false
-                }} />
+    console.log(route.params.UID)
+    if (route.params.UID == 'Z6gC5LWNNDMuR3snCHMUrSvxMZs2') {
+        return (
+            <Tab.Navigator
+                tabBar={props => <BottomNavBarAdmin {...props} />}
+            >
+                <Tab.Screen name="Início" component={HomeAdmin}
+                    initialParams={{ UID: route.params.UID }}
+                    options={{
+                        headerShown: false
+                    }} />
 
-            <Tab.Screen name="Contacto" component={HomeAdmin}
-                initialParams={{ UID: route.params.UID }}
-                options={{
-                    headerShown: false
-                }} />
-            <Tab.Screen name="Agendar" component={ScheServices}
-                initialParams={{ UID: route.params.UID }} />
+                <Tab.Screen name="Marcações" component={SchedulesAdmin}
+                    initialParams={{ UID: route.params.UID }} />
 
-            <Tab.Screen name="Marcações" component={Schedule}
-                initialParams={{ UID: route.params.UID }} />
+                <Tab.Screen name="Agendar" component={ScheServices}
+                    initialParams={{ UID: route.params.UID }} />
 
-            <Tab.Screen name="Perfil" component={Profile}
-                initialParams={{ UID: route.params.UID }} />
-        </Tab.Navigator>
-    )
+                <Tab.Screen name="Clientes" component={CostumersList}
+                    initialParams={{ UID: route.params.UID }} />
+
+                <Tab.Screen name="Perfil" component={Profile}
+                    initialParams={{ UID: route.params.UID }} />
+            </Tab.Navigator>
+        )
+    } else {
+        return (
+            <Tab.Navigator
+                tabBar={props => <BottomNavBar {...props} />}
+            >
+                <Tab.Screen name="Início" component={Home}
+                    initialParams={{ UID: route.params.UID }}
+                    options={{
+                        headerShown: false
+                    }} />
+
+                <Tab.Screen name="Contacto" component={Contact}
+                    initialParams={{ UID: route.params.UID }}
+                    options={{
+                        headerShown: false
+                    }} />
+                <Tab.Screen name="Agendar" component={ScheServices}
+                    initialParams={{ UID: route.params.UID }} />
+
+                <Tab.Screen name="Marcações" component={Schedule}
+                    initialParams={{ UID: route.params.UID }} />
+
+                <Tab.Screen name="Perfil" component={Profile}
+                    initialParams={{ UID: route.params.UID }} />
+            </Tab.Navigator>
+        )
+    }
+
 };
 
 const Home = ({ navigation, route }) => {

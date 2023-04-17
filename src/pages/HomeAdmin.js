@@ -5,55 +5,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // ui kitten
 import { Icon, Text, Layout, Card, Button, Modal } from '@ui-kitten/components';
 
-// navbars
-import BottomNavBar from '../../components/BottomNavBar';
-import TopNavBar from "../../components/TopNavBar"
-
 // database
 import { doc, getDoc } from "firebase/firestore"
 import { db } from '../firebaseConnection';
 
-// pages
-import LogIn from './LogIn';
-import Landing from './Landing';
-import Schedule from './Schedule';
-import ScheServices from './ScheServices';
-import AboutUs from './AboutUs';
-import Profile from './Profile';
-import CostumersList from './CostumersList';
-import Contact from './Contact';
-
 const { width } = Dimensions.get('window');
-
-const Tab = createBottomTabNavigator();
-
-// const HomeAdmin = ({ navigation, route }) => {
-//     return (
-//         <Tab.Navigator
-//             tabBar={props => <BottomNavBar {...props} />}
-//         >
-//             <Tab.Screen name="Início" component={HomeAdmin}
-//                 initialParams={{ UID: route.params.UID }}
-//                 options={{
-//                     headerShown: false
-//                 }} />
-
-//             <Tab.Screen name="Contacto" component={Contact}
-//                 initialParams={{ UID: route.params.UID }}
-//                 options={{
-//                     headerShown: false
-//                 }} />
-//             <Tab.Screen name="Agendar" component={ScheServices}
-//                 initialParams={{ UID: route.params.UID }} />
-
-//             <Tab.Screen name="Marcações" component={Schedule}
-//                 initialParams={{ UID: route.params.UID }} />
-
-//             <Tab.Screen name="Perfil" component={Profile}
-//                 initialParams={{ UID: route.params.UID }} />
-//         </Tab.Navigator>
-//     )
-// };
 
 const HomeAdmin = ({ navigation, route }) => {
     const params = route.params
@@ -131,7 +87,12 @@ const HomeAdmin = ({ navigation, route }) => {
                             <Text style={{ fontWeight: '300' }}>10:25</Text>
                         </View>
                         <View style={styles.contextRight}>
-                            <Text style={styles.details} onPress={() => navigation.navigate('Scheduling')} >Aprovar</Text>
+                            <Text style={styles.aprov} onPress={() => navigation.navigate('Scheduling')} >Aprovar</Text>
+                            <Icon
+                                style={styles.iconAprov}
+                                fill='#242961'
+                                name='checkmark-circle-outline'
+                                onPress={() => navigation.navigate('Scheduling')} />
                         </View>
                     </View>
                     <View style={styles.scheduleContent}>
@@ -143,7 +104,12 @@ const HomeAdmin = ({ navigation, route }) => {
                             <Text style={{ fontWeight: '300' }}>10:25</Text>
                         </View>
                         <View style={styles.contextRight}>
-                            <Text style={styles.details} onPress={() => setaprovSchedule(true) } >Aprovar</Text>
+                            <Text style={styles.aprov} onPress={() => setaprovSchedule(true)} >Aprovar</Text>
+                            <Icon
+                                style={styles.iconAprov}
+                                fill='#242961'
+                                name='checkmark-circle-outline'
+                                onPress={() => setaprovSchedule(true)} />
                         </View>
                     </View>
                 </View>
@@ -165,7 +131,7 @@ const HomeAdmin = ({ navigation, route }) => {
                     <Text style={{ textAlign: 'center', fontWeight: '300' }}>Data: {'\n'}Hora: {'\n'}Serviço: {'\n'}Cliente: {'\n'}</Text>
                     <View style={styles.btnModal}>
                         <Button title='Aprovar' color='#fff' onPress={() => {
-                            setScheduleDone(false)
+                            setaprovSchedule(false)
                             navigation.push('Home', { UID: params.UID })
                         }
                         } />
@@ -224,7 +190,9 @@ const styles = StyleSheet.create({
 
     contextRight: {
         width: "50%",
-        alignItems: "flex-end",
+        justifyContent: "flex-end",
+        flexDirection: 'row',
+        flexWrap: 'wrap',
     },
 
     btnModal: {
@@ -247,6 +215,17 @@ const styles = StyleSheet.create({
         width: 35,
         marginRight: 10,
         marginBottom: 20,
+    },
+
+    aprov: {
+        color: '#242961',
+        fontWeight: '300',
+    },
+
+    iconAprov: {
+        marginLeft: 7,
+        height: 20,
+        width: 20,
     },
 });
 

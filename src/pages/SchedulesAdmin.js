@@ -1,38 +1,47 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 
 const bookings = [
     {
         id: 1,
-        date: '01/05/2023',
-        time: '10:00 AM',
-        service: 'Manicure',
-        client: 'Ana',
+        date: 'Data',
+        time: 'Hora',
+        service: 'Subtitulo',
+        client: 'Cliente',
+        details: 'Serviço',
     },
     {
         id: 2,
-        date: '01/06/2023',
-        time: '11:00 AM',
-        service: 'Pedicure',
-        client: 'Maria',
+        date: 'Data',
+        time: 'Hora',
+        service: 'Subtitulo',
+        client: 'Cliente',
+        details: 'Serviço',
     },
     {
         id: 3,
-        date: '01/07/2023',
-        time: '02:00 PM',
-        service: 'Corte de cabelo',
-        client: 'João',
+        date: 'Data',
+        time: 'Hora',
+        service: 'Subtitulo',
+        client: 'Cliente',
+        details: 'Serviço',
     },
 ];
 
-const BeautyBookings = () => {
+const SchedulesAdmin = () => {
+    const [selectedBooking, setSelectedBooking] = useState(null);
+
+    const handleBookingPress = (booking) => {
+        setSelectedBooking(booking);
+    };
+
     const renderBookingItem = ({ item }) => (
-        <View style={styles.bookingItem}>
+        <TouchableOpacity style={styles.bookingItem} onPress={() => handleBookingPress(item)}>
             <Text style={styles.bookingDate}>{item.date}</Text>
             <Text style={styles.bookingTime}>{item.time}</Text>
             <Text style={styles.bookingService}>{item.service}</Text>
             <Text style={styles.bookingClient}>Com {item.client}</Text>
-        </View>
+        </TouchableOpacity>
     );
 
     return (
@@ -43,6 +52,18 @@ const BeautyBookings = () => {
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={styles.bookingsList}
             />
+            {selectedBooking && (
+                <View style={styles.detailsContainer}>
+                    <Text style={styles.detailsTitle}>Detalhes da Marcação</Text>
+                    <Text style={styles.detailsText}>{selectedBooking.details}</Text>
+                    <TouchableOpacity
+                        style={styles.detailsButton}
+                        onPress={() => setSelectedBooking(null)}
+                    >
+                        <Text style={styles.detailsButtonText}>Fechar</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
         </View>
     );
 };
@@ -78,6 +99,31 @@ const styles = StyleSheet.create({
     bookingClient: {
         fontSize: 16,
     },
+    detailsContainer: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        padding: 20,
+    },
+    detailsTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    detailsText: {
+        fontSize: 16,
+        marginBottom: 20,
+    },
+    detailsButton: {
+        backgroundColor: '#FFC0CB',
+        borderRadius: 10,
+        padding: 10,
+    },
+    detailsButtonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+        textAlign: 'center',
+    },
 });
 
-export default BeautyBookings;
+export default SchedulesAdmin;
