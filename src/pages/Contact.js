@@ -20,22 +20,22 @@ export default function Contact() {
                 </View>
                 <View>
                     {/* Localização */}
-                    <TouchableOpacity style={styles.contactBtn} onPress={() => Linking.openURL('https://www.google.com/maps/place/Rua+de+Brito+Capelo+688,+4450-068+Matosinhos/@41.1816105,-8.6920367,17z/data=!3m1!4b1!4m6!3m5!1s0xd246f3a5c449b9f:0xfb06c3f7d476eaac!8m2!3d41.1816065!4d-8.6898427!16s%2Fg%2F11c22dy1fj?hl=pt-PT')}>
+                    <TouchableOpacity style={styles.contactBtn} onPress={() => Linking.openURL('https://www.google.com/maps/search/Rua+dos+P%C3%A1ssaros+Azuis,+456/@41.1846239,-8.6710611,15z/data=!3m1!4b1')}>
                         <Icon
                             style={styles.iconBtn}
                             fill='#fff'
                             name='pin-outline'
                         />
-                        <Text style={styles.textBtn} > Rua de Brito Capelo, 688{"\n"}Matosinhos</Text>
+                        <Text style={styles.textBtn} > Rua dos Pássaros Azuis, 456{"\n"}Vila Serenidade</Text>
                     </TouchableOpacity>
 
                     {/* Telemóvel */}
-                    <TouchableOpacity style={styles.contactBtn} onPress={() => Linking.openURL(`tel:${+351999999999}`)}>
+                    <TouchableOpacity style={styles.contactBtn} onPress={() => Linking.openURL(`tel:${+351910987654}`)}>
                         <Icon
                             style={styles.iconBtn}
                             fill='#fff'
                             name='phone-outline' />
-                        <Text style={styles.textBtn} >+351 999 999 999</Text>
+                        <Text style={styles.textBtn} >+351 910 987 654</Text>
                     </TouchableOpacity>
 
                     {/* Email */}
@@ -44,10 +44,10 @@ export default function Contact() {
                             style={styles.iconBtn}
                             fill='#fff'
                             name='email-outline' />
-                        <Text style={styles.textBtn} >loremipsum@gmail.com</Text>
+                        <Text style={styles.textBtn} >contacto@pequenaametista.pt</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ marginTop: '-12%' }}>
+                {/* <View style={{ marginTop: '-12%' }}>
                     <Text style={{ fontSize: '20', fontWeight: '300', marginBottom: '2%' }} >Mensagem</Text>
                     <React.Fragment>
                         <Input
@@ -59,7 +59,7 @@ export default function Contact() {
                     <View style={styles.btnSubmit}>
                         <Button title='Submeter' color='#fff' />
                     </View>
-                </View>
+                </View> */}
             </ScrollView>
         </Layout>
     );
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         width: '100%',
-        height: '24%',
+        height: '29%',
     },
 
     textBtn: {

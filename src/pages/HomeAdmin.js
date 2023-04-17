@@ -1,9 +1,9 @@
 import React, { Profiler, useState, useEffect } from 'react';
-import { View, Image, Dimensions, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { View, Image, Dimensions, StyleSheet, TouchableOpacity, ScrollView, FlatList, Button } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // ui kitten
-import { Icon, Text, Layout, Card, Button, Modal } from '@ui-kitten/components';
+import { Icon, Text, Layout, Card, Modal } from '@ui-kitten/components';
 
 // database
 import { doc, getDoc } from "firebase/firestore"

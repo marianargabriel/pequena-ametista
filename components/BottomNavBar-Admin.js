@@ -38,7 +38,6 @@ const BottomNavBar = ({ navigation, state, route }) => {
                 <BottomNavigationTab title='MARCAÇÕES' icon={MarcacoesIcon} />
                 <BottomNavigationTab title='AGENDAR' icon={AgendarIcon} />
                 <BottomNavigationTab title='CLIENTES' icon={ClientesIcon} />
-                <BottomNavigationTab title='PERFIL' icon={PersonIcon} />
             </BottomNavigation>
         </SafeAreaView>
     )
