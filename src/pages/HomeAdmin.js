@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon, Text, Layout, Card, Modal } from '@ui-kitten/components';
 
 // database
-import { doc, getDoc } from "firebase/firestore"
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
 import { db } from '../firebaseConnection';
 
 const { width } = Dimensions.get('window');
@@ -17,7 +17,6 @@ const HomeAdmin = ({ navigation, route }) => {
     let userDatas = [];
     const [userData, setUserData] = useState([]);
     const [load, setLoad] = useState(false);
-    let ok = false;
 
     const [aprovSchedule, setaprovSchedule] = React.useState(false);
 
@@ -73,6 +72,7 @@ const HomeAdmin = ({ navigation, route }) => {
                 if (aprovado) {
                     dataAgendas.push({
                         userIndex: index,
+                        UID: UID,
                         data: dataHora.toLocaleDateString(),
                         hora: dataHora.toLocaleTimeString().slice(0, 5),
                         servicos: servicos.join(', '),
@@ -80,6 +80,7 @@ const HomeAdmin = ({ navigation, route }) => {
                 } else {
                     dataPendentes.push({
                         userIndex: index,
+                        UID: UID,
                         data: dataHora.toLocaleDateString(),
                         hora: dataHora.toLocaleTimeString().slice(0, 5),
                         servicos: servicos.join(', '),
@@ -91,6 +92,65 @@ const HomeAdmin = ({ navigation, route }) => {
         }
         setAgendaData(dataAgendas)
         setAgendaPendentesData(dataPendentes)
+    }
+
+    let data = []
+    let loaded = false;
+    async function aprovar() {
+        try {
+            const agendaRef = doc(db, "schedules", "agenda");
+            const agenda = await getDoc(agendaRef);
+            const agendaTemp = agenda.data().agenda;
+
+            agendaTemp.map(({ UID, aprovado, data, servicos }) => {
+                const dataHora = new Date(
+                    data.seconds * 1000 + data.nanoseconds / 1000000,
+                );
+
+                data.push({
+                    UID: UID,
+                    aprovado: aprovado,
+                    data: dataHora.toLocaleDateString(),
+                    hora: dataHora.toLocaleTimeString(),
+                    servicos: servicos,
+                })
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+        console.log(data)
+
+        let update = false;
+        for (let i of data) {
+            if (i.aprovado == false) {
+                i.aprovado = true;
+                update = true
+            }
+        }
+
+
+        if (load) {
+            for (let j = 0; j < data.length; j++) {
+                if (j == 0 && update) {
+                    try {
+                        await updateDoc(doc(db, "schedules", "testes"), {
+                            agenda: FieldValue.delete()
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
+
+                    try {
+                        await updateDoc(doc(db, "schedules", "testes"), {
+                            agenda: arrayUnion(data[j])
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            }
+        }
     }
 
     useEffect(() => {
@@ -108,11 +168,6 @@ const HomeAdmin = ({ navigation, route }) => {
     const [infoClickMarcacoes, setInfoClickMarcacoes] = useState(0);
     const [infoClickUser, setInfoClickUser] = useState(0);
     const [infoClickPendentes, setInfoClickPendentes] = useState(0);
-
-    let dadosPendentes = [
-        { nome: 'Guilherme', data: '19/05/2023', hora: '10:00', servicos: ['Axila', 'Peito'] },
-        { nome: 'Mariana', data: '20/05/2023', hora: '13:00', servicos: ['Unha'] },
-    ]
 
 
     if (load) {
@@ -194,7 +249,8 @@ const HomeAdmin = ({ navigation, route }) => {
 
                         <View style={styles.btnOKModal}>
                             <Button title={infoClick == 1 ? 'Aprovar' : 'OK'} color='#fff' onPress={() => {
-                                setaprovSchedule(false)
+                                setaprovSchedule(false);
+                                aprovar();
                                 // navigation.push('Home', { UID: params.UID })
                             }
                             } />
@@ -202,6 +258,7 @@ const HomeAdmin = ({ navigation, route }) => {
                         <View style={styles.btnCancelarModal}>
                             <Button title='Cancelar' color='#fff' onPress={() => {
                                 setaprovSchedule(false)
+
                                 // navigation.push('Home', { UID: params.UID })
                             }
                             } />
