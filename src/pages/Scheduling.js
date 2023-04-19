@@ -65,7 +65,7 @@ function Scheduling({ route, navigation }) {
 
 
     let erro = false;
-    let servicosArr = ['Epilação - Axilas', 'Epilação - Braços', 'Epilação - Buço', 'Epilação - Costas', 'Epilação - Coxa', 'Epilação - Glúteos', 'Epilação - Linha Alba', 'Epilação - Lombar', 'Epilação - Meia Perna', 'Epilação - Meio Braço', 'Epilação - Ombros', 'Epilação - Peito', 'Epilação - Perna', 'Epilação - Queixo', 'Epilação - Rosto', 'Epilação - Sobrancelhas', 'Epilação - Virilha Cavada', 'Epilação - Virilha Completa', 'Manicure - Aplicação - Unhas de Gel', 'Manicure - Aplicação - Verniz Gel', 'Manicure - Manutenção - Unhas de Gel', 'Manicure - Manutenção - Verniz Gel', 'Manicure - Reparação - Unha', 'Pestanas e Sobrancelhas - Aplicação - Extensão de Pestanas', 'Pestanas e Sobrancelhas - Lifting de Pestanas', 'Pestanas e Sobrancelhas - Manutenção - Extensão de Pestanas', 'Pestanas e Sobrancelhas - Permanete de Sobrancelhas', 'Pestanas e Sobrancelhas - Pintura de Pestanas', 'Threading - Buço', 'Threading - Linha Alba', 'Threading - Maças do Rosto', 'Threading - Nariz', 'Threading - Orelhas', 'Threading - Queixo', 'Threading - Rosto', 'Threading - Sobrancelhas'];
+    let servicosArr = ['Epilação - Abdómen','Epilação - Axilas', 'Epilação - Braços', 'Epilação - Buço', 'Epilação - Costas', 'Epilação - Coxa', 'Epilação - Glúteos', 'Epilação - Linha Alba', 'Epilação - Lombar', 'Epilação - Meia Perna', 'Epilação - Meio Braço', 'Epilação - Ombros', 'Epilação - Peito', 'Epilação - Perna', 'Epilação - Queixo', 'Epilação - Rosto', 'Epilação - Sobrancelhas', 'Epilação - Virilha Cavada', 'Epilação - Virilha Completa', 'Manicure - Aplicação - Unhas de Gel', 'Manicure - Aplicação - Verniz Gel', 'Manicure - Manutenção - Unhas de Gel', 'Manicure - Manutenção - Verniz Gel', 'Manicure - Reparação - Unha', 'Pestanas e Sobrancelhas - Aplicação - Extensão de Pestanas', 'Pestanas e Sobrancelhas - Lifting de Pestanas', 'Pestanas e Sobrancelhas - Manutenção - Extensão de Pestanas', 'Pestanas e Sobrancelhas - Permanete de Sobrancelhas', 'Pestanas e Sobrancelhas - Pintura de Pestanas', 'Threading - Buço', 'Threading - Linha Alba', 'Threading - Maças do Rosto', 'Threading - Nariz', 'Threading - Orelhas', 'Threading - Queixo', 'Threading - Rosto', 'Threading - Sobrancelhas'];
 
     useEffect(() => {
         console.log('UID: ' + params.UID + '\nServiços: ' + params.SERV)
@@ -114,15 +114,14 @@ function Scheduling({ route, navigation }) {
 
             // agendaNova = agendaNova.concat([{ 'UID': params.UID, 'data': Timestamp.fromDate(new Date(mes + " " + dia + ", " + ano + ", " + horaDB)), 'servicos': servicosSelected }])
             try {
-                const agendaRef = doc(db, "schedules", "testes");
+                const agendaRef = doc(db, "schedules", "agenda");
                 console.log(new Date(ano + '-' + mes + '-' + dia + 'T' + horaDB).toLocaleString())
                 await updateDoc(agendaRef, {
                     agenda: arrayUnion({
                         UID: params.UID,
+                        aprovado: false,
                         data: Timestamp.fromDate(new Date(ano + '-' + mes + '-' + dia + 'T' + horaDB)),
                         servicos: servicosSelected,
-                        estado: 0,
-                        aprovado: false,
                     })
                 });
 

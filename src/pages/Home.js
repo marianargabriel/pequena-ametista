@@ -3,7 +3,7 @@ import { View, Image, Dimensions, StyleSheet, TouchableOpacity, ScrollView, Flat
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // ui kitten
-import { Icon, Text, Layout, Card } from '@ui-kitten/components';
+import { Icon, Text, Layout, Card, Modal } from '@ui-kitten/components';
 
 // navbars
 import BottomNavBar from '../../components/BottomNavBar';
@@ -11,7 +11,7 @@ import BottomNavBarAdmin from '../../components/BottomNavBar-Admin';
 import TopNavBar from "../../components/TopNavBar"
 
 // database
-import { doc, getDoc } from "firebase/firestore"
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
 import { db } from '../firebaseConnection';
 
 // pages
@@ -88,11 +88,21 @@ const HomeScreen = ({ navigation, route }) => {
 
 const Home = ({ navigation, route }) => {
     const params = route.params
+
+    let userDatas = []; //acrescentei
+
+    const [aprovSchedule, setaprovSchedule] = React.useState(false);
+
+    const [load, setLoad] = useState(false);
     const [Name, setName] = React.useState('');
     const [Phone, setPhone] = React.useState('');
 
     const [userData, setUserData] = useState([]);
 
+
+    const [agendaData, setAgendaData] = useState([]); //acrescentei
+
+    //acrescentei
     async function getUserData() {
         console.log(params.UID)
         const userRef = doc(db, "users", params.UID);
@@ -107,14 +117,88 @@ const Home = ({ navigation, route }) => {
         }
     }
 
+    //acrescentei
+    async function getData() {
+        const userRef = doc(db, "users", params.UID);
+        const user = await getDoc(userRef);
+
+        if (user.exists()) {
+            console.log("User nome:", user.data().nome);
+            setUserData(user.data())
+        } else {
+            console.log("No such document!");
+        }
+
+        const agendaRef = doc(db, "schedules", "agenda");
+        const agenda = await getDoc(agendaRef);
+        let dataAgendas = [];
+        let dataPendentes = [];
+
+        if (agenda.exists()) {
+            console.log("Agenda:", agenda.data().agenda);
+            const agendaTemp = agenda.data().agenda
+
+            agendaTemp.map(({ UID, aprovado, data, servicos }, index) => {
+                const dataHora = new Date(
+                    data.seconds * 1000 + data.nanoseconds / 1000000,
+                );
+                try {
+                    // getUser(UID);
+                } catch (error) {
+                    console.log(error)
+                }
+
+                if (aprovado) {
+                    dataAgendas.push({
+                        userIndex: index,
+                        UID: UID,
+                        data: dataHora.toLocaleDateString(),
+                        hora: dataHora.toLocaleTimeString().slice(0, 5),
+                        servicos: servicos.join(', '),
+                    })
+                } else {
+                    dataPendentes.push({
+                        userIndex: index,
+                        UID: UID,
+                        data: dataHora.toLocaleDateString(),
+                        hora: dataHora.toLocaleTimeString().slice(0, 5),
+                        servicos: servicos.join(', '),
+                    })
+                }
+            })
+        } else {
+            console.log("No such document!");
+        }
+        setAgendaData(dataAgendas)
+        setAgendaPendentesData(dataPendentes)
+    }
+
+    // useEffect(() => {
+    //     getUserData();
+    // }, [])
+
+    //acrescentei
     useEffect(() => {
-        getUserData();
+        try {
+            getData().then(() => {
+
+                setLoad(true);
+            });
+        } catch (error) {
+            console.log(error)
+        }
     }, [])
 
     const [shadowOffsetWidth, setShadowOffsetWidth] = useState(4);
     const [shadowOffsetHeight, setShadowOffsetHeight] = useState(4);
     const [shadowRadius, setShadowRadius] = useState(5);
     const [shadowOpacity, setShadowOpacity] = useState(0.35);
+
+    //acrescentei
+    const [infoClick, setInfoClick] = useState(0);// tipo
+    const [infoClickMarcacoes, setInfoClickMarcacoes] = useState(0);
+    const [infoClickUser, setInfoClickUser] = useState(0);
+    const [infoClickPendentes, setInfoClickPendentes] = useState(0);
 
     return (
         <Layout style={{ flex: 1, paddingRight: '5%', paddingLeft: '5%', paddingTop: '15%' }}>
@@ -132,30 +216,41 @@ const Home = ({ navigation, route }) => {
                     </TouchableOpacity>
 
                     <Text style={styles.titles}>Próximas Marcações</Text>
-                    <View style={styles.scheduleContent}>
-                        <View style={styles.contextLeft}>
-                            <Text style={{ fontWeight: '300' }}>09/05/2023</Text>
-                        </View>
-                        <View style={styles.verticleLine}></View>
-                        <View style={styles.contextCenter}>
-                            <Text style={{ fontWeight: '300' }}>10:25</Text>
-                        </View>
-                        <View style={styles.contextRight}>
-                            <Text style={styles.details} onPress={() => navigation.navigate('Scheduling')} >Ver Detalhes</Text>
-                        </View>
-                    </View>
-                    <View style={styles.scheduleContent}>
-                        <View style={styles.contextLeft}>
-                            <Text style={{ fontWeight: '300' }}>10/05/2023</Text>
-                        </View>
-                        <View style={styles.verticleLine}></View>
-                        <View style={styles.contextCenter}>
-                            <Text style={{ fontWeight: '300' }}>10:25</Text>
-                        </View>
-                        <View style={styles.contextRight}>
-                            <Text style={styles.details} onPress={() => navigation.navigate('Scheduling')} >Ver Detalhes</Text>
-                        </View>
-                    </View>
+                    {agendaData.map((cliente, index) => {
+                        if (index >= 1) {
+                            return (
+                                <View style={styles.scheduleContent}>
+                                    <View style={styles.contextLeft}>
+                                        <Text style={{ fontWeight: '300' }}>{cliente.data}</Text>
+                                    </View>
+                                    <View style={styles.verticleLine}></View>
+                                    <View style={styles.contextCenter}>
+                                        <Text style={{ fontWeight: '300' }}>{cliente.hora}</Text>
+                                    </View>
+                                    <View style={styles.contextRight}>
+                                        <Text style={styles.details} onPress={() => {
+                                            setInfoClick(0);
+                                            setInfoClickMarcacoes(index);
+                                            setInfoClickUser(cliente.userIndex);
+                                            setaprovSchedule(true);
+                                        }} >Ver Detalhes</Text>
+                                    </View>
+                                </View>
+                                // <View style={styles.scheduleContent}>
+                                //     <View style={styles.contextLeft}>
+                                //         <Text style={{ fontWeight: '300' }}>10/05/2023</Text>
+                                //     </View>
+                                //     <View style={styles.verticleLine}></View>
+                                //     <View style={styles.contextCenter}>
+                                //         <Text style={{ fontWeight: '300' }}>10:25</Text>
+                                //     </View>
+                                //     <View style={styles.contextRight}>
+                                //         <Text style={styles.details} onPress={() => navigation.navigate('Scheduling')} >Ver Detalhes</Text>
+                                //     </View>
+                                // </View>
+                            )
+                        }
+                    })}
 
                     <Text style={styles.titles}>Serviços</Text>
 
@@ -231,9 +326,44 @@ const Home = ({ navigation, route }) => {
                 </View>
                 <Text style={styles.seeAll} onPress={() => navigation.navigate('Services')}>Ver Tudo</Text>
             </ScrollView>
+            {/* <Modal
+                visible={aprovSchedule}
+                style={{ minWidth: 330 }}
+                backdropStyle={styles.backdrop}
+                onBackdropPress={() => setaprovSchedule(false)}>
+                <Card disabled={true} style={{ borderRadius: 15, }}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                        <Icon
+                            style={styles.warnicon}
+                            fill='#8288C3'
+                            name='refresh-outline'
+                        />
+                        <Text style={{ marginBottom: 20, fontWeight: '500' }}>{infoClick == 1 ? 'Deseja aprovar o agendamento?' : 'Dados de Marcação'}</Text>
+                    </View>
+                    <Text style={{ textAlign: 'center', fontWeight: '300' }}>Data: {infoClick == 1 ? agendaPendentesData[infoClickPendentes].data : agendaData[infoClickMarcacoes].data}{'\n'}Hora: {infoClick == 1 ? agendaPendentesData[infoClickPendentes].hora : agendaData[infoClickMarcacoes].hora}{'\n'}Serviço: {infoClick == 1 ? agendaPendentesData[infoClickPendentes].servicos : agendaData[infoClickMarcacoes].servicos}{'\n'}Cliente: {infoClick == 1 ? finalUserData[infoClickUser] : finalUserData[infoClickUser]}{'\n'}</Text>
+
+                    <View style={styles.btnOKModal}>
+                        <Button title={infoClick == 1 ? 'Aprovar' : 'OK'} color='#fff' onPress={() => {
+                            setaprovSchedule(false);
+                            aprovar();
+                            // navigation.push('Home', { UID: params.UID })
+                        }
+                        } />
+                    </View>
+                    <View style={styles.btnCancelarModal}>
+                        <Button title='Cancelar' color='#fff' onPress={() => {
+                            setaprovSchedule(false)
+
+                            // navigation.push('Home', { UID: params.UID })
+                        }
+                        } />
+                    </View>
+                </Card>
+            </Modal> */}
         </Layout >
     );
 }
+
 
 const styles = StyleSheet.create({
     arrowBtn: {

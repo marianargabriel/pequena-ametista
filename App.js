@@ -1,5 +1,5 @@
 import { StyleSheet, View, LogBox } from 'react-native';
-// LogBox.ignoreAllLogs();
+LogBox.ignoreAllLogs();
 
 import React from 'react';
 
